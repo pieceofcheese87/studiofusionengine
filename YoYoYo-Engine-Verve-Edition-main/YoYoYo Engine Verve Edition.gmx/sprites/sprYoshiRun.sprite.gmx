@@ -20,8 +20,8 @@
   <width>50</width>
   <height>64</height>
   <frames>
-    <frame index="0">images\sprYoshiRunning_0.png</frame>
-    <frame index="1">images\sprYoshiRunning_1.png</frame>
-    <frame index="2">images\sprYoshiRunning_2.png</frame>
+    <frame index="0">images\sprYoshiRun_0.png</frame>
+    <frame index="1">images\sprYoshiRun_1.png</frame>
+    <frame index="2">images\sprYoshiRun_2.png</frame>
   </frames>
 </sprite>

@@ -32,6 +32,7 @@ djumpSpeed = 7 * global.grav; //Sets how fast the player double jumps
 gravity = 0.4 * global.grav; //Player gravity
 
 djump = 1; //Allow the player to double jump as soon as he spawns
+numJumps = 2 //2 for normal double jump, 1 for only single jumps, 3 for triple jump. See scrPlayerJump
 runSpeed = 3;   //Max horizontal speed
 maxVspeed = 9;  //Max vertical speed
 image_speed = 0.2;
@@ -49,6 +50,14 @@ if (global.autosave) //Save the game if currently set to autosave
     scrSaveGame(true);
     global.autosave = false;
 }
+
+//Control variables
+highGrav = false
+lowGrav = false
+vineGrav = false
+vineSpeed = false
+highSpeed = false
+iframes = 0
 
 xsafe = x;
 ysafe = y;
@@ -253,17 +262,84 @@ else    //Touching a vine
             <kind>1</kind>
             <string>///Player actions and movement
 
+//Gravity fields
+gravity = 0.4*global.grav
+if (place_meeting(x, y, objHighGravityField) || highGrav == true) {
+    gravity = 0.7*global.grav
+} else if (place_meeting(x, y, objLowGravityField) || lowGrav == true) {
+    gravity = 0.2*global.grav
+} else if (lowGravVine) {
+    gravity = 0.3*global.grav
+}
+
+//Speed fields
+if !vineSpeed &amp;&amp; !instance_exists(objYoshiControl) {
+    runSpeed = 3
+    if place_meeting(x, y, objLowSpeedField) {
+        runSpeed = 1
+    } else if (place_meeting(x, y, objHighSpeedField) || highSpeed = true) {
+        runSpeed = 6
+    }
+}
+
+//Magnet fields
+if place_meeting(x, y, objMagnetField) {
+    vspeed -= 0.71
+    djump = 1
+}
+
+//Elevator blocks
+if place_meeting(x, y, objElevatorBlockUp) {
+    vspeed = -3 * global.grav
+}
+else if place_meeting(x, y, objElevatorBlockDown) {
+    vspeed = 3 * global.grav
+}
+
+
 //Left-right input
-var L = (scrButtonCheck(KEY.LEFT) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(KEY.LEFT)));
-var R = (scrButtonCheck(KEY.RIGHT) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(KEY.RIGHT)));
+if global.invertControls {
+    var R = (scrButtonCheck(KEY.LEFT) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(KEY.LEFT)));
+    var L = (scrButtonCheck(KEY.RIGHT) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(KEY.RIGHT)));
+} else {
+    var L = (scrButtonCheck(KEY.LEFT) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(KEY.LEFT)));
+    var R = (scrButtonCheck(KEY.RIGHT) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(KEY.RIGHT)));
+}
 var h = 0;
 if (!frozen)
     { h = -(L || R) + (2 * R); }
 
 var ice = instance_place(x, y + global.grav, objIceBlock);
+
+if iframes &gt; 0 { iframes -= 1 }
+
+//Special player sprites
+if global.playerV {
+    var sprRunning = sprPlayerVRun;
+    var sprJump = sprPlayerVFall;
+    var sprFall = sprPlayerVFall;
+    var sprIdle = sprPlayerVIdle;
+}
+else if instance_exists(objYoshiControl) {
+    var sprJump = sprYoshiJump;
+    var sprRunning = sprYoshiRun;
+    var sprFall = sprYoshiFall;
+    var sprIdle = sprYoshiIdle;
+}
+else
+//Default sprites
+{
+    var sprJump = sprPlayerJump;
+    var sprRunning = sprPlayerRun;
+    var sprFall = sprPlayerFall;
+    var sprIdle = sprPlayerIdle;
+}
+
 var notOnBlock = place_free(x, y + global.grav);
 var onVineL = (place_meeting(x - 1, y, objVineL) &amp;&amp; notOnBlock);
 var onVineR = (place_meeting(x + 1, y, objVineR) &amp;&amp; notOnBlock);
+var vineL = instance_place(x - 1, y, objVineL);
+var vineR = instance_place(x + 1, y, objVineR);
 
 //Horizontal movement
 if (h != 0)    //Moving
@@ -323,7 +399,9 @@ if (!frozen)
     if (scrButtonCheckPressed(KEY.SHOOT))
         scrPlayerShoot();
     if (scrButtonCheckPressed(KEY.JUMP))
-        scrPlayerJump();
+        {
+            if global.playerV { scrVPlayerJump() } else { scrPlayerJump() }
+        }
     if (scrButtonCheckReleased(KEY.JUMP))
         scrPlayerReleaseJump();
     if (scrButtonCheckPressed(KEY.SUICIDE))
@@ -334,6 +412,11 @@ if (global.adAlign &amp;&amp; !place_free(x, y + (global.grav)) &amp;&amp; !froz
 {
     if (scrButtonCheckPressed(KEY.ALIGN_LEFT)) {hspeed -= 1;}
     if (scrButtonCheckPressed(KEY.ALIGN_RIGHT)) {hspeed += 1;}
+}
+
+//Wind fields
+if instance_place(x, y, objWindField) != noone {
+    hspeed += wind.hsp
 }
 </string>
           </argument>
@@ -357,14 +440,29 @@ if (global.adAlign &amp;&amp; !place_free(x, y + (global.grav)) &amp;&amp; !froz
             <kind>1</kind>
             <string>///Vines                                            
 
-if (onVineL || onVineR)
+if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
 {
+    //Jungle adventure vines
+    var red = ((onVineR &amp;&amp; vineR.object_index == objRedVineR) || (onVineL &amp;&amp; vineL.object_index == objRedVineL)); 
+    var ice = ((onVineR &amp;&amp; vineR.object_index == objIceVineR) || (onVineL &amp;&amp; vineL.object_index == objIceVineL)); 
+    var blue = ((onVineR &amp;&amp; vineR.object_index == objBlueVineR) || (onVineL &amp;&amp; vineL.object_index == objBlueVineL)); 
+    var yellow = ((onVineR &amp;&amp; vineR.object_index == objYellowVineR) || (onVineL &amp;&amp; vineL.object_index == objYellowVineL));
+    var purple = ((onVineR &amp;&amp; vineR.object_index == objPurpleVineR) || (onVineL &amp;&amp; vineL.object_index == objPurpleVineL));
+    var white = ((onVineR &amp;&amp; vineR.object_index == objWhiteVineR) || (onVineL &amp;&amp; vineL.object_index == objWhiteVineL));
+    var black = ((onVineR &amp;&amp; vineR.object_index == objBlackVineR) || (onVineL &amp;&amp; vineL.object_index == objBlackVineL));
+    var fire = ((onVineR &amp;&amp; vineR.object_index == objFireVineR) || (onVineL &amp;&amp; vineL.object_index == objFireVineL));
+    
+    //Abort if we're touching inactive white/black vines
+    if (global.vineToggle == 0 &amp;&amp; black) || (global.vineToggle == 1 &amp;&amp; white) { exit }
+    
     if (onVineR)
         { xScale = -1; }
     else
         { xScale = 1; }
     
-    vspeed = 2 * global.grav;
+    if !ice {
+        if red { vspeed = -2 * global.grav } else if yellow { vspeed = 0 } else { vspeed = 2 * global.grav }
+    }
     
     //Try to leave vine
     if (onVineL &amp;&amp; scrButtonCheckPressed(KEY.RIGHT)) || (onVineR &amp;&amp; scrButtonCheckPressed(KEY.LEFT))
@@ -375,8 +473,11 @@ if (onVineL || onVineR)
                 { hspeed = -15; }
             else
                 { hspeed = 15; }
+                
+            if blue { scrFlipGrav(false) }
             vspeed = -9 * global.grav;
             audio_play_sound(sndWallJump, 0, false);
+            if (white || black) { global.vineToggle = !global.vineToggle }
         }
         else    //Falling off
         {
@@ -385,9 +486,18 @@ if (onVineL || onVineR)
             else
                 { hspeed = 3; }
         }
+        if purple { vineGrav = true }
+        if fire { runSpeed = 6; vineSpeed = true }
     }
 }
 
+//Particles for low grav / fire vines
+if vineGrav &amp;&amp; global.count mod 10 == 1 {
+    part_particles_create(global.partSys,x,y,global.vinePart,2); 
+}
+if vineSpeed &amp;&amp; global.count mod 3 == 1 {
+    instance_create(x,y,objFirePart);
+}
 </string>
           </argument>
         </arguments>
@@ -591,6 +701,12 @@ vspeed += gravity;
 
 if (!place_free(x + hspeed, y + vspeed))
 {
+    //Block collision moves push blocks back, so let's undo that
+    with objPushBlock {
+        x = xMoved
+        y = yMoved
+    }
+
     if (!place_free(x + hspeed, y) &amp;&amp; hspeed != 0)
     {
         var maxDist = abs(hspeed);
@@ -609,6 +725,13 @@ if (!place_free(x + hspeed, y + vspeed))
         if (dir == 180 + global.grav * 90)
             { djump = 1; }
         vspeed = 0;
+        
+        //Reset vine variables
+        vineGrav = false;
+        if vineSpeed {
+            runSpeed = 3;
+            vineSpeed = false;
+        }
     }
     
     if (!place_free(x + hspeed, y + vspeed))
@@ -758,10 +881,18 @@ if (global.autosave) //Save the game if currently set to autosave
 var drawX = floor(x + 0.5);
 var drawY = floor(y + 0.5);
 
-if (global.grav == -1)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
+if (global.grav == -1 &amp;&amp; !global.dotkid)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
     { drawY += 1; }
 
-draw_sprite_ext(sprite_index, image_index, drawX, drawY, image_xscale * xScale, image_yscale * global.grav, image_angle, image_blend, image_alpha);
+if global.dotkid {
+    if global.playerV {
+        draw_sprite_ext(sprDotkidOutlinedV,0,drawX,drawY,image_xscale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+    } else {
+        draw_sprite_ext(sprDotkidOutlined,0,drawX,drawY,image_xscale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+    }
+} else {
+    draw_sprite_ext(sprite_index,image_index,drawX,drawY,image_xscale*xScale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+}
 
 //Draw the player's hitbox
 if (global.debugShowHitbox)

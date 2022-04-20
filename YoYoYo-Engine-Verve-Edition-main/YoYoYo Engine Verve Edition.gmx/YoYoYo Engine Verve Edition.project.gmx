@@ -64,7 +64,7 @@
         <sprite>sprites\sprYoshiLost</sprite>
         <sprite>sprites\sprYoshiLost2</sprite>
         <sprite>sprites\sprYoshiMask</sprite>
-        <sprite>sprites\sprYoshiRunning</sprite>
+        <sprite>sprites\sprYoshiRun</sprite>
         <sprite>sprites\sprYoshiWait</sprite>
       </sprites>
       <sprites name="Dotkid">
@@ -76,7 +76,7 @@
       <sprites name="VKid">
         <sprite>sprites\sprPlayerVFall</sprite>
         <sprite>sprites\sprPlayerVIdle</sprite>
-        <sprite>sprites\sprPlayerVRunning</sprite>
+        <sprite>sprites\sprPlayerVRun</sprite>
         <sprite>sprites\sprVCoinA</sprite>
         <sprite>sprites\sprVCoinB</sprite>
       </sprites>
@@ -354,7 +354,6 @@
       <script>scripts\scrSetPlayerMask.gml</script>
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
-      <script>scripts\scrPlayerWalljumps.gml</script>
       <script>scripts\scrVPlayerJump.gml</script>
     </scripts>
     <scripts name="Trigger">
