@@ -92,6 +92,8 @@
       <sprite>sprites\sprSign</sprite>
       <sprite>sprites\sprGravityUp</sprite>
       <sprite>sprites\sprGravityDown</sprite>
+      <sprite>sprites\sprGravityLeft</sprite>
+      <sprite>sprites\sprGravityRight</sprite>
       <sprite>sprites\sprEmpty</sprite>
     </sprites>
     <sprites name="Triggers">
@@ -177,6 +179,16 @@
       <script>scripts\scrSetPlayerMask.gml</script>
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
+      <scripts name="Movement">
+        <script>scripts\p_hspeed.gml</script>
+        <script>scripts\p_vspeed.gml</script>
+        <script>scripts\p_hspeed_add.gml</script>
+        <script>scripts\p_vspeed_add.gml</script>
+        <script>scripts\p_hdir.gml</script>
+        <script>scripts\p_place_free.gml</script>
+        <script>scripts\p_place_meeting.gml</script>
+        <script>scripts\p_instance_place.gml</script>
+      </scripts>
     </scripts>
     <scripts name="Trigger">
       <script>scripts\scrMakeTrigger.gml</script>
@@ -350,6 +362,7 @@
       <room>rooms\rTest</room>
     </rooms>
     <room>rooms\rTemplate</room>
+    <room>rooms\rTestRoom</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
