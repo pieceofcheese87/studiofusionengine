@@ -316,6 +316,7 @@
       <script>scripts\scrResetWindowSize.gml</script>
       <script>scripts\scrCheckAndPause.gml</script>
       <script>scripts\scrDynamicCollision.gml</script>
+      <script>scripts\scrParticles.gml</script>
     </scripts>
     <scripts name="Save/Load">
       <script>scripts\scrSaveConfig.gml</script>
@@ -353,6 +354,8 @@
       <script>scripts\scrSetPlayerMask.gml</script>
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
+      <script>scripts\scrPlayerWalljumps.gml</script>
+      <script>scripts\scrVPlayerJump.gml</script>
     </scripts>
     <scripts name="Trigger">
       <script>scripts\scrMakeTrigger.gml</script>
@@ -390,6 +393,7 @@
       <script>scripts\scrMakeCircle.gml</script>
       <script>scripts\scrEaseValue.gml</script>
       <script>scripts\scrFormat.gml</script>
+      <script>scripts\scrOscillate.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
