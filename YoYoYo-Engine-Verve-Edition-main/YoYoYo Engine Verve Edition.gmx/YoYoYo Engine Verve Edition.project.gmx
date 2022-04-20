@@ -8,17 +8,37 @@
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Sfx">
-      <sound>sound\sndJump</sound>
-      <sound>sound\sndDJump</sound>
-      <sound>sound\sndWallJump</sound>
-      <sound>sound\sndShoot</sound>
-      <sound>sound\sndDeath</sound>
-      <sound>sound\sndItem</sound>
-      <sound>sound\sndBlockChange</sound>
-      <sound>sound\sndBossHit</sound>
-      <sound>sound\sndCherry</sound>
-      <sound>sound\sndGlass</sound>
-      <sound>sound\sndSpikeTrap</sound>
+      <sounds name="Default">
+        <sound>sound\sndJump</sound>
+        <sound>sound\sndDJump</sound>
+        <sound>sound\sndWallJump</sound>
+        <sound>sound\sndShoot</sound>
+        <sound>sound\sndDeath</sound>
+        <sound>sound\sndItem</sound>
+        <sound>sound\sndBlockChange</sound>
+        <sound>sound\sndBreak</sound>
+        <sound>sound\sndBossHit</sound>
+        <sound>sound\sndCherry</sound>
+        <sound>sound\sndGlass</sound>
+        <sound>sound\sndSpikeTrap</sound>
+      </sounds>
+      <sound>sound\sndBlockCrash</sound>
+      <sound>sound\sndChompy</sound>
+      <sound>sound\sndDotkidChange</sound>
+      <sound>sound\sndGainStar</sound>
+      <sound>sound\sndLaserSwitch</sound>
+      <sound>sound\sndLoseStar</sound>
+      <sound>sound\sndSheepBlock</sound>
+      <sound>sound\sndShootRefresher</sound>
+      <sound>sound\sndSpikeSwitch</sound>
+      <sound>sound\sndThwomp</sound>
+      <sound>sound\sndTransform</sound>
+      <sound>sound\sndVCoin</sound>
+      <sound>sound\sndVFlip1</sound>
+      <sound>sound\sndVFlip2</sound>
+      <sound>sound\sndYoshi</sound>
+      <sound>sound\sndYoshi2</sound>
+      <sound>sound\sndYoshiJump</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\musOnDeath</sound>
@@ -278,9 +298,13 @@
     <background>background\bJumpThrough</background>
     <background>background\bTree</background>
     <background>background\bStars</background>
+    <background>background\bTestRoomTiles</background>
   </backgrounds>
   <paths name="paths">
     <path>paths\pathExample</path>
+    <path>paths\path32Down</path>
+    <path>paths\path32DownUpClosed</path>
+    <path>paths\path32Up</path>
   </paths>
   <scripts name="scripts">
     <scripts name="World">
