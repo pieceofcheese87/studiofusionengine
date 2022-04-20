@@ -444,7 +444,7 @@ if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
 {
     //Jungle adventure vines
     var red = ((onVineR &amp;&amp; vineR.object_index == objRedVineR) || (onVineL &amp;&amp; vineL.object_index == objRedVineL)); 
-    var ice = ((onVineR &amp;&amp; vineR.object_index == objIceVineR) || (onVineL &amp;&amp; vineL.object_index == objIceVineL)); 
+    var icev = ((onVineR &amp;&amp; vineR.object_index == objIceVineR) || (onVineL &amp;&amp; vineL.object_index == objIceVineL)); 
     var blue = ((onVineR &amp;&amp; vineR.object_index == objBlueVineR) || (onVineL &amp;&amp; vineL.object_index == objBlueVineL)); 
     var yellow = ((onVineR &amp;&amp; vineR.object_index == objYellowVineR) || (onVineL &amp;&amp; vineL.object_index == objYellowVineL));
     var purple = ((onVineR &amp;&amp; vineR.object_index == objPurpleVineR) || (onVineL &amp;&amp; vineL.object_index == objPurpleVineL));
@@ -460,7 +460,7 @@ if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
     else
         { xScale = 1; }
     
-    if !ice {
+    if !icev {
         if red { vspeed = -2 * global.grav } else if yellow { vspeed = 0 } else { vspeed = 2 * global.grav }
     }
     
