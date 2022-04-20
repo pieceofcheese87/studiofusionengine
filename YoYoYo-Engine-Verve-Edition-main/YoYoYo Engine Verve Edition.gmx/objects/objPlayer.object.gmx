@@ -268,7 +268,7 @@ if (place_meeting(x, y, objHighGravityField) || highGrav == true) {
     gravity = 0.7*global.grav
 } else if (place_meeting(x, y, objLowGravityField) || lowGrav == true) {
     gravity = 0.2*global.grav
-} else if (lowGravVine) {
+} else if (vineGrav) {
     gravity = 0.3*global.grav
 }
 
@@ -443,25 +443,25 @@ if instance_place(x, y, objWindField) != noone {
 if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
 {
     //Jungle adventure vines
-    var red = ((onVineR &amp;&amp; vineR.object_index == objRedVineR) || (onVineL &amp;&amp; vineL.object_index == objRedVineL)); 
-    var icev = ((onVineR &amp;&amp; vineR.object_index == objIceVineR) || (onVineL &amp;&amp; vineL.object_index == objIceVineL)); 
-    var blue = ((onVineR &amp;&amp; vineR.object_index == objBlueVineR) || (onVineL &amp;&amp; vineL.object_index == objBlueVineL)); 
-    var yellow = ((onVineR &amp;&amp; vineR.object_index == objYellowVineR) || (onVineL &amp;&amp; vineL.object_index == objYellowVineL));
-    var purple = ((onVineR &amp;&amp; vineR.object_index == objPurpleVineR) || (onVineL &amp;&amp; vineL.object_index == objPurpleVineL));
-    var white = ((onVineR &amp;&amp; vineR.object_index == objWhiteVineR) || (onVineL &amp;&amp; vineL.object_index == objWhiteVineL));
-    var black = ((onVineR &amp;&amp; vineR.object_index == objBlackVineR) || (onVineL &amp;&amp; vineL.object_index == objBlackVineL));
-    var fire = ((onVineR &amp;&amp; vineR.object_index == objFireVineR) || (onVineL &amp;&amp; vineL.object_index == objFireVineL));
+    var onRise = ((onVineR &amp;&amp; vineR.object_index == objRiseVineR) || (onVineL &amp;&amp; vineL.object_index == objRiseVineL)); 
+    var onIce = ((onVineR &amp;&amp; vineR.object_index == objIceVineR) || (onVineL &amp;&amp; vineL.object_index == objIceVineL)); 
+    var onFlip = ((onVineR &amp;&amp; vineR.object_index == objFlipVineR) || (onVineL &amp;&amp; vineL.object_index == objFlipVineL)); 
+    var onSticky = ((onVineR &amp;&amp; vineR.object_index == objStickyVineR) || (onVineL &amp;&amp; vineL.object_index == objStickyVineL));
+    var onLowGrav = ((onVineR &amp;&amp; vineR.object_index == objLowGravVineR) || (onVineL &amp;&amp; vineL.object_index == objLowGravVineL));
+    var onWhite = ((onVineR &amp;&amp; vineR.object_index == objTwinWhiteVineR) || (onVineL &amp;&amp; vineL.object_index == objTwinWhiteVineL));
+    var onBlack = ((onVineR &amp;&amp; vineR.object_index == objTwinBlackVineR) || (onVineL &amp;&amp; vineL.object_index == objTwinBlackVineL));
+    var onSpeed = ((onVineR &amp;&amp; vineR.object_index == objSpeedVineR) || (onVineL &amp;&amp; vineL.object_index == objSpeedVineL));
     
     //Abort if we're touching inactive white/black vines
-    if (global.vineToggle == 0 &amp;&amp; black) || (global.vineToggle == 1 &amp;&amp; white) { exit }
+    if (global.vineToggle == 0 &amp;&amp; onBlack) || (global.vineToggle == 1 &amp;&amp; onWhite) { exit }
     
     if (onVineR)
         { xScale = -1; }
     else
         { xScale = 1; }
     
-    if !icev {
-        if red { vspeed = -2 * global.grav } else if yellow { vspeed = 0 } else { vspeed = 2 * global.grav }
+    if !onIce {
+        if onRise { vspeed = -2 * global.grav } else if onSticky { vspeed = 0 } else { vspeed = 2 * global.grav }
     }
     
     //Try to leave vine
@@ -474,10 +474,10 @@ if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
             else
                 { hspeed = 15; }
                 
-            if blue { scrFlipGrav(false) }
+            if onFlip { scrFlipGrav(false) }
             vspeed = -9 * global.grav;
             audio_play_sound(sndWallJump, 0, false);
-            if (white || black) { global.vineToggle = !global.vineToggle }
+            if (onWhite || onBlack) { global.vineToggle = !global.vineToggle }
         }
         else    //Falling off
         {
@@ -486,8 +486,8 @@ if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
             else
                 { hspeed = 3; }
         }
-        if purple { vineGrav = true }
-        if fire { runSpeed = 6; vineSpeed = true }
+        if onLowGrav { vineGrav = true }
+        if onSpeed { runSpeed = 6; vineSpeed = true }
     }
 }
 

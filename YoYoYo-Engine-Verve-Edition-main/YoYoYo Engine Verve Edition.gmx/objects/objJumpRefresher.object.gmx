@@ -96,9 +96,13 @@
             <kind>1</kind>
             <string>if (visible)
 {
-    with (objPlayer)
-    {
-        djump = 1;
+    with (objPlayer) {
+        if numJumps == 2 {
+            djump = 1
+        } else {
+            djump += 0.5
+            if djump &gt; 1 djump = 1
+        }
     }
     
     visible = false;
