@@ -1,0 +1,40 @@
+TL;DR: Triggers are now made differently and are much more powerful. Check sample room for examples and
+the Trigger scripts folder for a full list.
+
+The two biggest changes to the trigger system are the removal of trigger variants of objects, instead allowing for any
+object to be made triggerable, and a significant expansion of trigger effects directly inspired by RedBatNick's engine.
+Locked triggers are also reintroduced as they were ommited in YoYoYo engine.
+
+objTriggerManager is the object taking care of all trigger behavior, with the individual options being defined in indi-
+vidual scripts in the Trigger scripts folder. You shouldn't ever need to place objTriggerManager, instead calling
+scrMakeTrigger() in an object's Creation code. You can pass the trigger id as an argument instead of specifying it later.
+The script returns the id of the newly made objTriggerManager instance, meaning the intended use case would be something
+like:
+with(scrMakeTrigger("fall"))
+{
+    ...
+}
+
+As you can see, strings are also valid trigger ids now. You can check the sample room for several examples of triggers.
+
+Now that you have your object react to a trigger, you need to define what it actually does. The most convenient way to do
+this is by calling a trigger script. You can open each script for a detailed explanation of what it does. Behaviors that
+move the instance are special in that you can only use one at a time: You can't have an instance follow a path and have
+gravity, etc. Other than that, you can mix any of the other triggers together.
+For example:
+with(scrMakeTrigger("fall"))
+{
+    trgMove(0, 5); 
+    trgSound(sndCherry, 1);
+}
+
+If you assign a trigger to a moving object, it will work the same until it is triggered, when the objTriggerManager
+takes control of the instance's movement, unless the trigger doesn't have a movement action set - see fading out
+platforms in the sample room.
+
+Trigger objects get used as usual, except they can now be locked by setting the key variable to a trigger id.
+Locked triggers do not get activated until the trigger with the key id gets activated first.
+Additionally, triggers can play sounds and destroy themselves on activation, see the objTrigger Create event.
+
+To make new trigger behavior, look at the existing ones for reference and use a copy of trgTemplate as a start.
+Don't forget to then add your new script to scrTriggerList.
