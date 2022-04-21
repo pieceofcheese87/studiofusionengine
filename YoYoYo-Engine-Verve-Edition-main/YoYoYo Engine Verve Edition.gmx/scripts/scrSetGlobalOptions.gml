@@ -3,6 +3,8 @@
 //Debug
 global.debugMode = true;        //Enables debug keys (check objWorld step to see all of them), make sure to set this to "false" before releasing your game
 global.debugVisuals = true;     //Enables changing the color/alpha of player when infjump/god mode are toggled, make sure to disable this if you want to change the player's image_alpha or image_blend
+global.debugControl = false;    //Sets whether to require control to be held for certain debug options (used to prevent accidental usage of debug binds with things such as numpadding, or fat fingering)
+global.debugDeathSpeed = 50;    //Sets how many frames after getting hit for god mode to effect the player (50 frames = 1 second, 1 frame = chainsaw mode)
 
 //Updates
 global.checkForUpdates = false;
