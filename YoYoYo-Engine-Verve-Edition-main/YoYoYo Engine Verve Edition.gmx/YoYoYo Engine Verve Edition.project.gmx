@@ -355,6 +355,7 @@
       <script>scripts\scrPlayerShoot.gml</script>
       <script>scripts\scrVineCheck.gml</script>
       <script>scripts\scrSetPlayerMask.gml</script>
+      <script>scripts\scrGetPlayerSkin.gml</script>
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
       <script>scripts\scrVPlayerJump.gml</script>

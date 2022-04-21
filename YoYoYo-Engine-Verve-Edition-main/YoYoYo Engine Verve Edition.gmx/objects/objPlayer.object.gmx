@@ -196,27 +196,18 @@ if ((bbox_right &lt; 0 || bbox_left &gt; room_width || bbox_bottom &lt; 0 || bbo
     scrKillPlayer();
 }
 
-//Special player sprites
-if global.playerV {
-    var sprRun = sprPlayerVRun;
-    var sprJump = sprPlayerVFall;
-    var sprFall = sprPlayerVFall;
-    var sprIdle = sprPlayerVIdle;
+//Special player skins
+var skin = SKIN.DEFAULT;
+if global.dotkid {
+    skin = SKIN.DOTKID;
+}
+else if global.playerV {
+    skin = SKIN.VVV;
 }
 else if instance_exists(objYoshiControl) {
-    var sprJump = sprYoshiJump;
-    var sprRun = sprYoshiRun;
-    var sprFall = sprYoshiFall;
-    var sprIdle = sprYoshiIdle;
+    skin = SKIN.YOSHI;
 }
-else
-//Default sprites
-{
-    var sprJump = sprPlayerJump;
-    var sprRun = sprPlayerRun;
-    var sprFall = sprPlayerFall;
-    var sprIdle = sprPlayerIdle;
-}
+scrGetPlayerSkin(skin);
 
 var notOnBlock = (place_free(x, y + global.grav));
 var onVineR = scrVineCheck(x + 1, y, objVineR, notOnBlock);
@@ -257,7 +248,7 @@ if (!onVineR &amp;&amp; !onVineL)   //Not touching any vines
 }
 else if !global.dotkid //Touching a vine
 {
-    sprite_index = sprPlayerSlide;
+    sprite_index = sprSlide;
     image_speed = 1/2;
 }
 </string>

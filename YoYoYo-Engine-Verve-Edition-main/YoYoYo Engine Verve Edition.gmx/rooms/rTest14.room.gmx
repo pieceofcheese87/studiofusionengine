@@ -72,8 +72,6 @@
     <instance objName="objBlock" x="608" y="480" name="inst_21F6F6C2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="640" y="480" name="inst_C08CADB9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="672" y="480" name="inst_234AFD2B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="128" y="448" name="inst_99245FB9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="192" y="352" name="inst_5FC08C17" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objThwomp" x="480" y="192" name="inst_DFD4F60A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objThwomp" x="576" y="224" name="inst_4940A2F5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objThwomp" x="416" y="288" name="inst_9E99865B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

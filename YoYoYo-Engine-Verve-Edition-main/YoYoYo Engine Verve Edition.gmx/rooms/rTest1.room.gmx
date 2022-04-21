@@ -73,7 +73,6 @@
     <instance objName="objBlock" x="576" y="480" name="inst_0A390D32" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="608" y="480" name="inst_21F6F6C2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="640" y="480" name="inst_C08CADB9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="544" y="512" name="inst_A2592BF1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objJumpSpike_UpIn" x="512" y="480" name="inst_A5D864D4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objJumpSpike_UpOut" x="480" y="448" name="inst_73A38C3F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objJumpSpikesBehindTiles" x="576" y="416" name="inst_7D1CE4D6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

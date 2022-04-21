@@ -77,9 +77,6 @@
     <instance objName="objSampleOscillator" x="400" y="352" name="inst_C1A3C73A" locked="0" code="type=2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSampleOscillator" x="496" y="352" name="inst_F03D647A" locked="0" code="type=3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSave" x="288" y="448" name="inst_B69FA04D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="96" y="416" name="inst_E6CB9B41" locked="0" code="hspeed = 5&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="704" y="352" name="inst_9F5EC1F7" locked="0" code="vspeed = -3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="192" y="384" name="inst_3360B413" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bTestRoomTiles" x="480" y="480" w="32" h="32" xo="0" yo="0" id="10002321" name="inst_628A43FA" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
