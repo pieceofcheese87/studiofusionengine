@@ -75,7 +75,7 @@ if (speed != 0)
                 {
                     if (!place_free(x, y + other.vspeed))
                     {
-                        if (global.platformsSquish)
+                        if (!global.platformsPhase)
                         {
                             scrKillPlayer();
                         }
@@ -100,7 +100,7 @@ if (speed != 0)
                 {
                     if (!place_free(x + other.hspeed, y))
                     {
-                        if (global.platformsSquish)
+                        if (!global.platformsPhase)
                         {
                             scrKillPlayer();
                         }
