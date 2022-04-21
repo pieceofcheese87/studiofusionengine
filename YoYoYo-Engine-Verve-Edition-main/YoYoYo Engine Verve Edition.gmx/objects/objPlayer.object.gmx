@@ -307,16 +307,16 @@ if abs(global.grav) == 2 {
             <string>///Player actions and movement
 
 //Gravity fields
-gravity = 0.4*global.grav
+gravity = 0.4*sign(global.grav)
 if (place_meeting(x, y, objHighGravityField) || highGrav == true) {
-    gravity = 0.7*global.grav
+    gravity = 0.7*sign(global.grav)
 } else if (place_meeting(x, y, objLowGravityField) || lowGrav == true) {
-    gravity = 0.2*global.grav
+    gravity = 0.2*sign(global.grav)
 } else if (vineStick) {
     gravity = 0
     vineStick = false
 } else if (vineGrav) {
-    gravity = 0.3*global.grav
+    gravity = 0.3*sign(global.grav)
 }
 
 //Speed fields
@@ -332,15 +332,15 @@ if !vineSpeed &amp;&amp; !instance_exists(objYoshiControl) {
 //Magnet fields
 if place_meeting(x, y, objMagnetField) {
     vspeed -= 0.71
-    djump = 1
+    p_refresh();
 }
 
 //Elevator blocks
 if place_meeting(x, y, objElevatorBlockUp) {
-    vspeed = -3 * global.grav
+    p_vspeed(-3)
 }
 else if place_meeting(x, y, objElevatorBlockDown) {
-    vspeed = 3 * global.grav
+    p_vspeed(3)
 }
 
 
@@ -355,22 +355,17 @@ if global.invertControls {
 var h = 0;
 if (!frozen)
     { h = -(L || R) + (2 * R); }
-if global.grav == 2 h = -h;
+if p_is_sideways() h = -h;
     
 var ice = p_instance_place(0, sign(global.grav), objIceBlock);
 var notOnBlock = p_place_free(0, sign(global.grav));
 
-var onVineL = (p_place_meeting(-1, 0, objVineL) &amp;&amp; notOnBlock);
-var onVineR = (p_place_meeting(1, 0, objVineR) &amp;&amp; notOnBlock);
+var onVineL = scrVineCheck(-1, 0, objVineL, notOnBlock);
+var onVineR = scrVineCheck(1, 0, objVineR, notOnBlock);
 var vineL = noone; if onVineL { vineL = p_instance_place(-1, 0, objVineL); }
 var vineR = noone; if onVineR { vineR = p_instance_place(1, 0, objVineR); }
 
 if iframes &gt; 0 { iframes -= 1 }
-
-/*
-var onVineL = scrVineCheck(x - 1, y, objVineL, notOnBlock);
-var onVineR = scrVineCheck(x + 1, y, objVineR, notOnBlock);
-//*/
 
 //Horizontal movement
 if (h != 0)    //Moving
@@ -599,7 +594,7 @@ if abs(global.grav) &lt;= 1 { // Vertical gravity
             
             if (!place_free(x, y + global.grav) &amp;&amp; place_free(x, y))  //Snapped onto the slope properly
             {
-                djump = 1;
+                p_refresh()
                 notOnBlock = false;
             }
             else    //Did not snap onto the slope, return to previous position
@@ -755,7 +750,7 @@ if abs(global.grav) &lt;= 1 { // Vertical gravity
             
             if (!place_free(x + sign(global.grav), y) &amp;&amp; place_free(x, y))  //Snapped onto the slope properly
             {
-                djump = 1;
+                p_refresh()
                 notOnBlock = false;
             }
             else    //Did not snap onto the slope, return to previous position
@@ -939,7 +934,7 @@ if (!p_place_free(p_hspeed(), p_vspeed()))
         move_contact_solid(dir, maxDist);
         
         if (dir == 180 + global.grav * 90)
-            { djump = 1; }
+            { p_refresh(); }
         vspeed = 0;
     }
     
@@ -956,10 +951,10 @@ if (!p_place_free(p_hspeed(), p_vspeed()))
         
         if abs(global.grav) &lt;= 1  {
             if (dir == 180 + sign(global.grav) * 90)
-                { djump = 1; }
+                { p_refresh(); }
         } else {
             if (dir == 90 - (sign(global.grav) * 90))
-                { djump = 1; }
+                { p_refresh(); }
         }
         
         p_vspeed(0);
@@ -1010,7 +1005,7 @@ switch global.grav {
             vspeed = max(other.vspeed, 0);
             
             onPlatform = true;
-            djump = 1;
+            p_refresh();
         }
         break;
     case -1: // Upside down gravity
@@ -1024,7 +1019,7 @@ switch global.grav {
             vspeed = min(other.vspeed, 0);
             
             onPlatform = true;
-            djump = 1;
+            p_refresh();
         }
         break;
     case 2: // Right gravity
@@ -1038,7 +1033,7 @@ switch global.grav {
             hspeed = max(other.hspeed, 0);
             
             onPlatform = true;
-            djump = 1;
+            p_refresh();
         }
         break;
     case -2: // Left gravity
@@ -1052,7 +1047,7 @@ switch global.grav {
             hspeed = min(other.hspeed, 0);
             
             onPlatform = true;
-            djump = 1;
+            p_refresh();
         }
         break;
 }

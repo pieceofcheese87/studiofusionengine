@@ -53,7 +53,7 @@ aa = 1
             <kind>1</kind>
             <string>if other.numJumps != 2 {
     other.numJumps = 2
-    if other.djump == 0.5 {
+    if other.djump == 1 {
         other.djump = 0
     }
     effect = true

@@ -8,7 +8,7 @@
   <parentName>objWater2</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="4" ename="objPlayer">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>other.djump = 1;
-p_water();
+            <string>event_inherited()
+
+refresh = true
 </string>
           </argument>
         </arguments>

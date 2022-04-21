@@ -8,7 +8,7 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="4" ename="objPlayer">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,7 +25,42 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>p_water();
+            <string>float_spd = 2;
+swim = true;
+refresh = false;
+fulljump = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var touching = instance_place(x, y, objPlayer);
+
+if touching {
+    if refresh &gt; 0 {
+        p_refresh(refresh, true);
+    } else if refreshing &lt; 0 {
+        p_refresh(0, true);
+    }
+    p_water(float_spd)
+}
 </string>
           </argument>
         </arguments>

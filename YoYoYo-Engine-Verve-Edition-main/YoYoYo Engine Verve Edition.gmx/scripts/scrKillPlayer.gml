@@ -40,15 +40,6 @@ if (instance_exists(objPlayer) && (!global.noDeath && !global.debugNoDeath))
         }
     } // yoshi control exists
     else {
-        audio_play_sound(sndYoshi2,0,0);
-        with(objYoshiControl){instance_destroy()}
-        objPlayer.mask_index=sprPlayerMask
-        instance_create(objPlayer.x,objPlayer.y,objYoshiLost)
-        objPlayer.iframes=25
-        objPlayer.runSpeed=3
-        objPlayer.maxVspeed=9
-        objPlayer.jumpSpeed = 8.5*global.grav
-        objPlayer.djump = 1
-        objPlayer.y-=16*global.grav
+        scrPlayerDismountYoshi(false)
     }
 }

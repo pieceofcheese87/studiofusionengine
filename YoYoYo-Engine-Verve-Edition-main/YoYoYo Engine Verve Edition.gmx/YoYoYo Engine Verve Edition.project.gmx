@@ -366,6 +366,7 @@
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
       <script>scripts\scrVPlayerJump.gml</script>
+      <script>scripts\scrPlayerDismountYoshi.gml</script>
       <scripts name="Movement">
         <script>scripts\p_hspeed.gml</script>
         <script>scripts\p_vspeed.gml</script>
@@ -382,6 +383,9 @@
         <script>scripts\p_x_add.gml</script>
         <script>scripts\p_y_add.gml</script>
         <script>scripts\p_water.gml</script>
+        <script>scripts\p_grav.gml</script>
+        <script>scripts\p_is_sideways.gml</script>
+        <script>scripts\p_refresh.gml</script>
       </scripts>
     </scripts>
     <scripts name="Trigger">
@@ -674,10 +678,10 @@
         <object>objects\objHPbg</object>
         <object>objects\objHPside</object>
       </objects>
+      <object>objects\objWater0</object>
       <object>objects\objWater</object>
       <object>objects\objWater2</object>
       <object>objects\objWater3</object>
-      <object>objects\objWaterUnrefreshing</object>
       <object>objects\objJumpRefresher</object>
       <object>objects\objBlockRefresher</object>
       <object>objects\objGravityDown</object>

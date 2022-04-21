@@ -4,8 +4,8 @@
 if (place_meeting(x,y+(global.grav),objBlock) || onPlatform)
 {
     scrFlipGrav();
-    vspeed = jumpSpeed;
-    if global.grav == -1 { audio_play_sound(sndVFlip1,0,false) } else { audio_play_sound(sndVFlip2,0,false) }
+    p_vspeed(jumpSpeed)
+    if p_grav() == -1 { audio_play_sound(sndVFlip1,0,false) } else { audio_play_sound(sndVFlip2,0,false) }
     
     // Jump spike movement
     with objJumpSpike {

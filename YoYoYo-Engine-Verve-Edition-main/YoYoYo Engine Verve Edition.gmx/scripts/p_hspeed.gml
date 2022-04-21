@@ -15,12 +15,12 @@ if argument_count > 0 {
     val = argument[0];
 }
 
-if (abs(global.grav) == 1) { // If global.grav is -1 or 1, use hspeed as usual
+if !p_is_sideways() {
     if val != undefined {
         p.hspeed = val;
     }
     r = p.hspeed;
-} else { // If global.grav is -2 or 2, use vspeed instead of hspeed
+} else {
     if val != undefined {
         p.vspeed = val;
     }

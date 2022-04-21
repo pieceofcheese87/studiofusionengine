@@ -20,10 +20,10 @@ if global.grav != g {
     p_vspeed(0)
     
     with p {
-        jumpSpeed = abs(jumpSpeed) * sign(global.grav);
-        djumpSpeed = abs(djumpSpeed) * sign(global.grav);
-        gravity = abs(gravity) * sign(global.grav);
-        if abs(global.grav) == 2 {
+        jumpSpeed = abs(jumpSpeed) * p_grav();
+        djumpSpeed = abs(djumpSpeed) * p_grav();
+        gravity = abs(gravity) * p_grav();
+        if p_is_sideways() {
             gravity_direction = 0;
         } else {
             gravity_direction = 270;
@@ -31,10 +31,10 @@ if global.grav != g {
     }
     
     if j > -1 {
-        p.djump = j;
+        p_refresh(j, false);
     }
     
-    p_y_add(4)
+    p_y_add(4);
     
-    p_not_splat()
+    p_not_splat();
 }

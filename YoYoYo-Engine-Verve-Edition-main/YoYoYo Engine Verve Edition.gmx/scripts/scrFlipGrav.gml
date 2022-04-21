@@ -25,5 +25,5 @@ with (objPlayer)
     }
 }
 if (dj) {
-    with (objPlayer) { djump = 1 }
+    with (objPlayer) { p_refresh() }
 }

@@ -5,7 +5,7 @@
 var _x = argument[0],
     _y = argument[1];
 
-if abs(global.grav) == 1 {
+if !p_is_sideways() {
     return place_free(x + _x, y + _y);
 } else {
     return place_free(x + _y, y + _x);

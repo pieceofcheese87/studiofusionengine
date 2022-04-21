@@ -54,7 +54,7 @@ aa = 1
             <string>if other.numJumps != 3 {
     other.numJumps = 3
     if other.djump == 0 {
-        other.djump = 0.5
+        other.djump = 1
     }
     effect = true
     xs = 1

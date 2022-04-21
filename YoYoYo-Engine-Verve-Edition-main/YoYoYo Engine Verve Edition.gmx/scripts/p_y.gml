@@ -13,7 +13,7 @@ if argument_count > 0 {
     val = argument[0];
 }
 
-if abs(global.grav) == 2 {
+if p_is_sideways() {
     _y = p.x;
     if val != undefined {
         _y = val;
