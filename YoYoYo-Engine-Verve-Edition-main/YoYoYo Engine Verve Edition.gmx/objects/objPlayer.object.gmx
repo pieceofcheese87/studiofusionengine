@@ -914,14 +914,12 @@ var drawX = floor(x + 0.5);
 var drawY = floor(y + 0.5);
 var drawColor = c_white;
 
-if (global.grav == -1 &amp;&amp; !global.dotkid)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
-    { drawY += 1; }
+if global.debugInfJump {
+    drawColor = c_blue; 
+} 
 
-if (!global.debugInfJump)
-{
-    drawColor = c_white;
-}
-else { drawColor = c_blue; }
+if (global.grav == -1 &amp;&amp; !global.dotkid)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
+    drawY += 1; 
     
 if global.dotkid {
     if global.playerV {
@@ -935,11 +933,11 @@ if global.dotkid {
 
 //Draw the player's hitbox
 if (global.debugShowHitbox)
-    { draw_sprite_ext(mask_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha * 0.8); }
+    draw_sprite_ext(mask_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha * 0.8);
     
 //Draw the player getting hit if god mode is active
 if (hit != 0)
-    { draw_sprite_ext(sprPlayerHit, 0, hitX, hitY, 1, 1, 0, c_white, hit/floor(global.debugDeathSpeed/2)); }
+    draw_sprite_ext(sprPlayerHit, 0, hitX, hitY, 1, 1, 0, c_white, hit/floor(global.debugDeathSpeed/2));
 </string>
           </argument>
         </arguments>

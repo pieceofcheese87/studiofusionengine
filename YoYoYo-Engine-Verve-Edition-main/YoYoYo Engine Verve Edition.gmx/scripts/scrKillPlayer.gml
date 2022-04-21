@@ -11,13 +11,14 @@ if (instance_exists(objPlayer))
         
         with (objPlayer) {
             hit = global.debugDeathSpeed;
+            iframes = global.debugDeathSpeed;
             hitX = x; hitY = y;
         }
         
         if (global.gameStarted)
             global.death += 1;
     }
-    else if (instance_exists(objYoshiControl) //yoshi death
+    else if (instance_exists(objYoshiControl)) //yoshi death
     {
         audio_play_sound(sndYoshi2,0,0);
         with(objYoshiControl){instance_destroy()}

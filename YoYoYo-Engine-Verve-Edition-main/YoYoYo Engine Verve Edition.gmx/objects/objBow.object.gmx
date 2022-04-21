@@ -54,7 +54,11 @@ neg = false;
 if (instance_exists(objPlayer))
 {
     x = objPlayer.x;
-    y = objPlayer.y;
+    if instance_exists(objYoshiControl)
+        y = objPlayer.y - (40 * global.grav);
+    else
+        y = objPlayer.y;
+        
     image_xscale = objPlayer.xScale;
     depth = objPlayer.depth-1;
     
