@@ -21,5 +21,6 @@
   <height>32</height>
   <frames>
     <frame index="0">images\sprGravityUp_0.png</frame>
+    <frame index="1">images\sprGravityUp_1.png</frame>
   </frames>
 </sprite>

@@ -1,11 +1,19 @@
 ///scrSetPlayerMask
 //sets the player's mask depending on gravity flip mode
 
-if (global.grav == 1)
-{
-    mask_index = sprPlayerMask;
+var m = sprPlayerMask;
+
+switch (global.grav) {
+    case -2:
+        break;
+    case -1:
+        m = sprPlayerMaskFlip;
+        break;
+    case 1:
+        m = sprPlayerMask;
+        break;
+    case 2:
+        break;
 }
-else
-{
-    mask_index = sprPlayerMaskFlip;
-}
+
+mask_index = m;

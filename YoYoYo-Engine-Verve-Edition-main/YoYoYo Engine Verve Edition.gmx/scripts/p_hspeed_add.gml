@@ -1,4 +1,4 @@
 /// p_hspeed_add(val)
-// lmfao sorry
+// part of the fetid collection
 
 p_hspeed(p_hspeed()+argument[0]);

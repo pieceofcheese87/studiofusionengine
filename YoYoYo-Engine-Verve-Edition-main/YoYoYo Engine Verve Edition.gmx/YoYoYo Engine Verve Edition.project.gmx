@@ -19,6 +19,7 @@
       <sound>sound\sndCherry</sound>
       <sound>sound\sndGlass</sound>
       <sound>sound\sndSpikeTrap</sound>
+      <sound>sound\sndGravity</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\musOnDeath</sound>
@@ -188,6 +189,12 @@
         <script>scripts\p_place_free.gml</script>
         <script>scripts\p_place_meeting.gml</script>
         <script>scripts\p_instance_place.gml</script>
+        <script>scripts\p_set_gravity.gml</script>
+        <script>scripts\p_not_splat.gml</script>
+        <script>scripts\p_x.gml</script>
+        <script>scripts\p_y.gml</script>
+        <script>scripts\p_x_add.gml</script>
+        <script>scripts\p_y_add.gml</script>
       </scripts>
     </scripts>
     <scripts name="Trigger">
@@ -320,8 +327,10 @@
       <object>objects\objVineL</object>
       <object>objects\objJumpRefresher</object>
       <object>objects\objSign</object>
-      <object>objects\objGravityUp</object>
       <object>objects\objGravityDown</object>
+      <object>objects\objGravityUp</object>
+      <object>objects\objGravityLeft</object>
+      <object>objects\objGravityRight</object>
     </objects>
     <objects name="Saves">
       <object>objects\objSaveMedium</object>

@@ -1,4 +1,4 @@
 /// p_vspeed_add(val)
-// lmfao sorry
+// part of the fetid collection
 
 p_vspeed(p_vspeed()+argument[0]);
