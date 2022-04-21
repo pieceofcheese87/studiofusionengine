@@ -21,7 +21,7 @@
         <sound>sound\sndCherry</sound>
         <sound>sound\sndGlass</sound>
         <sound>sound\sndSpikeTrap</sound>
-		<sound>sound\sndGravity</sound>
+        <sound>sound\sndGravity</sound>
       </sounds>
       <sound>sound\sndBlockCrash</sound>
       <sound>sound\sndChompy</sound>
@@ -235,8 +235,8 @@
       <sprites name="Gravity/Physics">
         <sprite>sprites\sprGravityUp</sprite>
         <sprite>sprites\sprGravityDown</sprite>
-		<sprite>sprites\sprGravityLeft</sprite>
-		<sprite>sprites\sprGravityRight</sprite>
+        <sprite>sprites\sprGravityLeft</sprite>
+        <sprite>sprites\sprGravityRight</sprite>
         <sprite>sprites\sprRotateKidDown</sprite>
         <sprite>sprites\sprRotateKidUp</sprite>
         <sprite>sprites\sprFlipBlockDown</sprite>
@@ -365,7 +365,7 @@
       <script>scripts\scrGetPlayerSkin.gml</script>
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
-	  <script>scripts\scrVPlayerJump.gml</script>
+      <script>scripts\scrVPlayerJump.gml</script>
       <scripts name="Movement">
         <script>scripts\p_hspeed.gml</script>
         <script>scripts\p_vspeed.gml</script>
@@ -685,7 +685,7 @@
       <object>objects\objGravityLeft</object>
       <object>objects\objGravityRight</object>
       <object>objects\objSign</object>
-	  <object>objects\objFloatingText</object>
+      <object>objects\objFloatingText</object>
       <object>objects\objSampleOscillator</object>
     </objects>
     <objects name="Saves">

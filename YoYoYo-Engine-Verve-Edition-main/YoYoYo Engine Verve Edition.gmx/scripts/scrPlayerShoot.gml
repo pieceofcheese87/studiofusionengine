@@ -18,20 +18,22 @@ if instance_exists(objYoshiControl)
 {
     audio_play_sound(sndShoot,0,false);
     audio_play_sound(sndDeath,0,0);
+    
     with(objYoshiControl){instance_destroy()}
-    objPlayer.mask_index=sprPlayerMask
-    objPlayer.y-=(20*global.grav)
-    a=instance_create(objPlayer.x,objPlayer.y,objYoshiDead)
-    a.image_xscale=objPlayer.xScale
-    objPlayer.runSpeed=3
-    objPlayer.maxVspeed=9
-    objPlayer.jumpSpeed = 8.5*global.grav
-    objPlayer.djump = 1
+    
+    p.mask_index=sprPlayerMask
+    p.y-=(20*sign(global.grav))
+    a=instance_create(p.x,p.y,objYoshiDead)
+    a.image_xscale=p.xScale
+    
+    p.runSpeed=3
+    p.maxVspeed=9
+    p.jumpSpeed = 8.5*sign(global.grav)
+    p.djump = 1
 } else if (instance_number(objBullet) < 4) {
     var f = instance_create(_x, _y, objBullet);
     
     f.direction = angle;
     f.speed = 16;
-}
     audio_play_sound(sndShoot, 0, false);
 }
