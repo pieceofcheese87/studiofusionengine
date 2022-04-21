@@ -39,18 +39,12 @@ global.noPause = false;         //Used to prevent pausing, for example in bossfi
 global.autosave = false;        //Used to autosave the next time the player is created
 global.noDeath = false;
 global.infJump = false;
-global.dotkid = false;
-global.playerV = false;
-global.invertControls = false;
-
-global.count = 0; //Oscillation timer
-
-scrParticles() //Initialize Particle Systems
 
 global.gamePaused = false;
 global.pauseSurf = -1;          //Stores the screen surface when the game is paused
 global.pauseDelay = 0;          //Sets pause delay so that the player can't quickly pause buffer
 
+scrLoadMusic();
 global.currentMusicID = -1;     //Current music
 global.currentMusic = -1;       //Sound instance of the current music
 global.deathSound = -1;         
