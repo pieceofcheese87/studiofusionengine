@@ -14,8 +14,8 @@ global.menuMode = 1;                //Sets whether to use a warp room or a menu 
 global.menuSound = sndJump;         //Sets what sound to use for navigating the main menu
 
 //World
-global.startRoom = rSample;         //Sets which room to begin with
-global.roomCaptionDef = "YoYoYo Engine Verve Edition";  //Sets default window caption (only works with the Professional version of Studio)
+global.startRoom = rTestHub;         //Sets which room to begin with
+global.roomCaptionDef = "I Wanna Be The Studio Fusion Engine";  //Sets default window caption (only works with the Professional version of Studio)
 global.deathMusicMode = 0;          //Sets whether or not to play death music when the player dies (0 = no death music, 1 = instantly pause current music, 2 = fade out current music)
 global.pauseDelayLength = 40;       //Sets the delay in frames in which the player can pause/unpause the game (can be set to 0 to disable pause delay)
 global.timeWhenDead = true;         //Sets whether or not to count the in-game timer when the player is dead
