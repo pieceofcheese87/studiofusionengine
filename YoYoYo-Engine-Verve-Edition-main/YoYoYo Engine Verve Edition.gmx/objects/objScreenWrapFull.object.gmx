@@ -52,7 +52,7 @@
             <string>with (objPlayer)
 {
     //wraps the object around the screen if it goes outside the end of it
-    if !place_meeting(x,y+2,objMovingPlatform) {
+    if !place_meeting(x,y+2,objPlatform) {
         if (x &lt; view_xview[0])
             x += view_wview[0];
         else if (x &gt;= view_xview[0]+view_wview[0])
@@ -80,7 +80,7 @@ with (objBullet)
         y -= view_hview[0];
 }
 
-with (objMovingPlatform)
+with (objPlatform)
 {
     //wraps the object around the screen if it goes outside the end of it
     

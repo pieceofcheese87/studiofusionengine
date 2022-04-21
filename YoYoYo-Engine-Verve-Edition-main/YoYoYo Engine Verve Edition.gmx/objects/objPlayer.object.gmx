@@ -56,6 +56,7 @@ highGrav = false
 lowGrav = false
 vineGrav = false
 vineSpeed = false
+vineStick = false
 highSpeed = false
 iframes = 0
 
@@ -195,10 +196,31 @@ if ((bbox_right &lt; 0 || bbox_left &gt; room_width || bbox_bottom &lt; 0 || bbo
     scrKillPlayer();
 }
 
+//Special player sprites
+if global.playerV {
+    var sprRun = sprPlayerVRun;
+    var sprJump = sprPlayerVFall;
+    var sprFall = sprPlayerVFall;
+    var sprIdle = sprPlayerVIdle;
+}
+else if instance_exists(objYoshiControl) {
+    var sprJump = sprYoshiJump;
+    var sprRun = sprYoshiRun;
+    var sprFall = sprYoshiFall;
+    var sprIdle = sprYoshiIdle;
+}
+else
+//Default sprites
+{
+    var sprJump = sprPlayerJump;
+    var sprRun = sprPlayerRun;
+    var sprFall = sprPlayerFall;
+    var sprIdle = sprPlayerIdle;
+}
 
 var notOnBlock = (place_free(x, y + global.grav));
-var onVineR = (place_meeting(x + 1, y, objVineR) &amp;&amp; notOnBlock);
-var onVineL = (place_meeting(x - 1, y, objVineL) &amp;&amp; notOnBlock);
+var onVineR = scrVineCheck(x + 1, y, objVineR, notOnBlock);
+var onVineL = scrVineCheck(x - 1, y, objVineL, notOnBlock);
 
 if (!onVineR &amp;&amp; !onVineL)   //Not touching any vines
 {
@@ -210,12 +232,12 @@ if (!onVineR &amp;&amp; !onVineL)   //Not touching any vines
         
         if ((L || R) &amp;&amp; !frozen)
         {
-            sprite_index = sprPlayerRun;
+            sprite_index = sprRun;
             image_speed = 1/2;
         }
         else
         {
-            sprite_index = sprPlayerIdle;
+            sprite_index = sprIdle;
             image_speed = 1/5;
         }
     }
@@ -223,17 +245,17 @@ if (!onVineR &amp;&amp; !onVineL)   //Not touching any vines
     { 
         if ((vspeed * global.grav) &lt; 0)
         {
-            sprite_index = sprPlayerJump;
+            sprite_index = sprJump;
             image_speed = 1/2;
         }
         else
         {
-            sprite_index = sprPlayerFall;
+            sprite_index = sprFall;
             image_speed = 1/2;
         }
     }
 }
-else    //Touching a vine
+else if !global.dotkid //Touching a vine
 {
     sprite_index = sprPlayerSlide;
     image_speed = 1/2;
@@ -268,6 +290,9 @@ if (place_meeting(x, y, objHighGravityField) || highGrav == true) {
     gravity = 0.7*global.grav
 } else if (place_meeting(x, y, objLowGravityField) || lowGrav == true) {
     gravity = 0.2*global.grav
+} else if (vineStick) {
+    gravity = 0
+    vineStick = false
 } else if (vineGrav) {
     gravity = 0.3*global.grav
 }
@@ -313,33 +338,11 @@ var ice = instance_place(x, y + global.grav, objIceBlock);
 
 if iframes &gt; 0 { iframes -= 1 }
 
-//Special player sprites
-if global.playerV {
-    var sprRunning = sprPlayerVRun;
-    var sprJump = sprPlayerVFall;
-    var sprFall = sprPlayerVFall;
-    var sprIdle = sprPlayerVIdle;
-}
-else if instance_exists(objYoshiControl) {
-    var sprJump = sprYoshiJump;
-    var sprRunning = sprYoshiRun;
-    var sprFall = sprYoshiFall;
-    var sprIdle = sprYoshiIdle;
-}
-else
-//Default sprites
-{
-    var sprJump = sprPlayerJump;
-    var sprRunning = sprPlayerRun;
-    var sprFall = sprPlayerFall;
-    var sprIdle = sprPlayerIdle;
-}
-
-var notOnBlock = place_free(x, y + global.grav);
-var onVineL = (place_meeting(x - 1, y, objVineL) &amp;&amp; notOnBlock);
-var onVineR = (place_meeting(x + 1, y, objVineR) &amp;&amp; notOnBlock);
-var vineL = instance_place(x - 1, y, objVineL);
-var vineR = instance_place(x + 1, y, objVineR);
+var notOnBlock = (place_free(x, y + global.grav));
+var onVineL = scrVineCheck(x - 1, y, objVineL, notOnBlock);
+var onVineR = scrVineCheck(x + 1, y, objVineR, notOnBlock);
+var vineL = noone; if onVineL { vineL = instance_place(x - 1, y, objVineL); }
+var vineR = noone; if onVineR { vineR = instance_place(x + 1, y, objVineR); }
 
 //Horizontal movement
 if (h != 0)    //Moving
@@ -415,7 +418,8 @@ if (global.adAlign &amp;&amp; !place_free(x, y + (global.grav)) &amp;&amp; !froz
 }
 
 //Wind fields
-if instance_place(x, y, objWindField) != noone {
+var wind = instance_place(x, y, objWindField);
+if wind != noone {
     hspeed += wind.hsp
 }
 </string>
@@ -451,17 +455,14 @@ if (onVineL || onVineR) &amp;&amp; !instance_exists(objYoshiControl)
     var onWhite = ((onVineR &amp;&amp; vineR.object_index == objTwinWhiteVineR) || (onVineL &amp;&amp; vineL.object_index == objTwinWhiteVineL));
     var onBlack = ((onVineR &amp;&amp; vineR.object_index == objTwinBlackVineR) || (onVineL &amp;&amp; vineL.object_index == objTwinBlackVineL));
     var onSpeed = ((onVineR &amp;&amp; vineR.object_index == objSpeedVineR) || (onVineL &amp;&amp; vineL.object_index == objSpeedVineL));
-    
-    //Abort if we're touching inactive white/black vines
-    if (global.vineToggle == 0 &amp;&amp; onBlack) || (global.vineToggle == 1 &amp;&amp; onWhite) { exit }
-    
+
     if (onVineR)
         { xScale = -1; }
     else
         { xScale = 1; }
     
     if !onIce {
-        if onRise { vspeed = -2 * global.grav } else if onSticky { vspeed = 0 } else { vspeed = 2 * global.grav }
+        if onRise { vspeed = -2 * global.grav } else if onSticky { vspeed = 0; vineStick = true } else { vspeed = 2 * global.grav }
     }
     
     //Try to leave vine
@@ -718,6 +719,15 @@ if (!place_free(x + hspeed, y + vspeed))
      
     if (!place_free(x, y + vspeed) &amp;&amp; vspeed != 0)
     {
+        //Reset vine variables
+        if (vspeed &gt; 0 &amp;&amp; global.grav == 1) || (vspeed &lt; 0 &amp;&amp; global.grav == -1) {
+            vineGrav = false;
+            if vineSpeed {
+                runSpeed = 3;
+                vineSpeed = false;
+            }
+        }
+    
         var maxDist = abs(vspeed);
         var dir = 270 - 180 * (vspeed &lt; 0);
         move_contact_solid(dir, maxDist);
@@ -725,13 +735,6 @@ if (!place_free(x + hspeed, y + vspeed))
         if (dir == 180 + global.grav * 90)
             { djump = 1; }
         vspeed = 0;
-        
-        //Reset vine variables
-        vineGrav = false;
-        if vineSpeed {
-            runSpeed = 3;
-            vineSpeed = false;
-        }
     }
     
     if (!place_free(x + hspeed, y + vspeed))

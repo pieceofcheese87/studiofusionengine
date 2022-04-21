@@ -32,6 +32,9 @@ falling = false;
 image_speed = 0;
 shakeXOff = 0;
 xOrigin = x;
+
+lifetime = 40;
+goingToFall = false;
 </string>
           </argument>
         </arguments>
@@ -55,13 +58,14 @@ xOrigin = x;
           <argument>
             <kind>1</kind>
             <string>if (!falling &amp;&amp; active){
-    if (place_meeting(x,y,objPlayer)){ //only fall if player is standing on the platform
+    if (goingToFall || place_meeting(x,y-1,objPlayer)){ //only fall if player is standing on the platform
         if (timer == -1){
-            timer = 120;
+            timer = lifetime;
             image_index = 1;
         }else timer --;
         
-        if (timer &lt;= 50){
+        if (timer &lt;= lifetime/2){
+            goingToFall = true
             shakeXOff = irandom_range(-3,3);
         }else{
             shakeXOff = 0;

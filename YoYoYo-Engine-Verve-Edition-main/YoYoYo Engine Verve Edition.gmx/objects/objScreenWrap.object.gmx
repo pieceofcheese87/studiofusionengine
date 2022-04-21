@@ -68,7 +68,7 @@
             <kind>1</kind>
             <string>// Note: This collision event is executed before the player's End Step check for killing itself it outside of the room
 with(objPlayer) {
-    if (x &lt; 0 || x &gt; room_width || y &lt; 0 || y &gt; room_height) &amp;&amp; !place_meeting(x,y+2,objMovingPlatform)
+    if (x &lt; 0 || x &gt; room_width || y &lt; 0 || y &gt; room_height) &amp;&amp; !place_meeting(x,y+2,objPlatform)
     {
         if (x &lt; 0)
         {

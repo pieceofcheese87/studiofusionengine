@@ -7,7 +7,7 @@ global.grav = -global.grav;
 
 //restore double jump by default
 var dj = true;
-if argument_count > 0 { dj = argument0 }
+if argument_count > 0 { dj = argument[0] }
 
 //Flip the player
 with (objPlayer)

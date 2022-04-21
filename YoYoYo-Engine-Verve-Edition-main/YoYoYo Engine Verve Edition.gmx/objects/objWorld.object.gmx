@@ -446,10 +446,10 @@ if (!instance_exists(objPlayMusic))
 room_speed = 50;
 scrSetRoomCaption();
 
-//Set dotkid and playerV to false on each room start
+//Set dotkid and vvv kid to false on room start
 global.dotkid = false
 global.playerV = false
-with objPlayer scrSetPlayerMask()
+with objPlayer { scrSetPlayerMask() }
 
 //Set global.count to 0 to reset oscillation cycles
 global.count = 0

@@ -39,6 +39,7 @@
       <sound>sound\sndYoshi</sound>
       <sound>sound\sndYoshi2</sound>
       <sound>sound\sndYoshiJump</sound>
+      <sound>sound\sndCeilingSwitch</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\musOnDeath</sound>
@@ -109,7 +110,6 @@
         <sprite>sprites\sprDonutBlock</sprite>
         <sprite>sprites\sprExpandBlock</sprite>
         <sprite>sprites\sprScaleBlock</sprite>
-        <sprite>sprites\sprHammerBrosBlock</sprite>
         <sprite>sprites\sprBreakableBlock</sprite>
         <sprite>sprites\sprToggleBlockEmpty</sprite>
         <sprite>sprites\sprToggleBlockFull</sprite>
@@ -353,6 +353,7 @@
       <script>scripts\scrPlayerJump.gml</script>
       <script>scripts\scrPlayerReleaseJump.gml</script>
       <script>scripts\scrPlayerShoot.gml</script>
+      <script>scripts\scrVineCheck.gml</script>
       <script>scripts\scrSetPlayerMask.gml</script>
       <script>scripts\scrKillPlayer.gml</script>
       <script>scripts\scrFlipGrav.gml</script>
@@ -445,7 +446,6 @@
         <object>objects\objDonutBlock</object>
         <object>objects\objExpandBlockSource</object>
         <object>objects\objExpandBlock</object>
-        <object>objects\objHammerBrosBlock</object>
         <object>objects\objScalingBlock</object>
         <object>objects\objPushBlock</object>
         <object>objects\objBreakableBlock</object>
@@ -656,6 +656,7 @@
       <object>objects\objJumpRefresher</object>
       <object>objects\objBlockRefresher</object>
       <object>objects\objSign</object>
+      <object>objects\objFloatingText</object>
       <object>objects\objGravityUp</object>
       <object>objects\objGravityDown</object>
       <object>objects\objSampleOscillator</object>
@@ -693,11 +694,31 @@
       <room>rooms\rDifficultySelect</room>
     </rooms>
     <rooms name="Sample">
+      <room>rooms\rTestHub</room>
       <room>rooms\rSample</room>
       <room>rooms\rCherryBoss</room>
       <room>rooms\rMiku</room>
       <room>rooms\rEnd</room>
-      <room>rooms\rTest</room>
+      <rooms name="Test rooms">
+        <room>rooms\rTest</room>
+        <room>rooms\rTest1</room>
+        <room>rooms\rTest2</room>
+        <room>rooms\rTest3</room>
+        <room>rooms\rTestWrap</room>
+        <room>rooms\rTest4</room>
+        <room>rooms\rTest5</room>
+        <room>rooms\rTest6</room>
+        <room>rooms\rTest7</room>
+        <room>rooms\rTest8</room>
+        <room>rooms\rTest9</room>
+        <room>rooms\rTest10</room>
+        <room>rooms\rTest11</room>
+        <room>rooms\rTest12</room>
+        <room>rooms\rTest13</room>
+        <room>rooms\rTest14</room>
+        <room>rooms\rTest15</room>
+        <room>rooms\rTest16</room>
+      </rooms>
     </rooms>
     <room>rooms\rTemplate</room>
   </rooms>
