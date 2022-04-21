@@ -50,6 +50,7 @@ snap = true; //Snap the player when jumping through from below
           <argument>
             <kind>1</kind>
             <string>///Bounce off walls, carry the player horizontally and upwards
+// TODO: Probably rewrite this to not be super scuffed, if possible :splat:
 
 if (speed != 0)
 {
@@ -61,27 +62,54 @@ if (speed != 0)
             { vspeed = -vspeed; }
     }
     
-    with (instance_place(x, y - (2*global.grav), objPlayer))
-    {
-        if ((bbox_bottom &lt;= other.bbox_top || bbox_top &gt;= other.bbox_bottom) &amp;&amp; (global.grav * vspeed) &gt;= (global.grav * other.vspeed))
+    if abs(global.grav) &lt;= 1 {
+        with (instance_place(x, y - (2*sign(global.grav)), objPlayer))
         {
-            if (place_free(x + hspeed + other.hspeed, y))
+            if (bbox_bottom &lt;= other.bbox_top || bbox_top &gt;= other.bbox_bottom)
             {
-                x += other.hspeed;
-            }
-            if (global.grav == -sign(other.vspeed))
-            {
-                if (!place_free(x, y + other.vspeed))
+                if (place_free(x + hspeed + other.hspeed, y))
                 {
-                    if (!global.platformsPhase)
+                    x += other.hspeed;
+                }
+                if (global.grav == -sign(other.vspeed))
+                {
+                    if (!place_free(x, y + other.vspeed))
                     {
-                        scrKillPlayer();
+                        if (global.platformsSquish)
+                        {
+                            scrKillPlayer();
+                        }
                     }
-                }
-                else
+                    else
+                    {
+                        y += other.vspeed;            
+                    }
+                }                 
+            }
+        }
+    } else {
+        with (instance_place(x - (2*sign(global.grav)), y, objPlayer))
+        {
+            if (bbox_right &lt;= other.bbox_left || bbox_left &gt;= other.bbox_right)
+            {
+                if (place_free(x, y + vspeed + other.vspeed))
                 {
-                    y += other.vspeed;            
+                    y += other.vspeed;
                 }
+                if (global.grav == -sign(other.hspeed))
+                {
+                    if (!place_free(x + other.hspeed, y))
+                    {
+                        if (global.platformsSquish)
+                        {
+                            scrKillPlayer();
+                        }
+                    }
+                    else
+                    {
+                        x += other.hspeed;            
+                    }
+                }                 
             }
         }
     }

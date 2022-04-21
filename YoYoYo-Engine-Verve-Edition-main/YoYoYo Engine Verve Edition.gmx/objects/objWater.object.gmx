@@ -25,14 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (objPlayer) 
-{
-    djump = 1;
-    if ((vspeed * global.grav) &gt; 2)
-    {
-        vspeed = 2 * global.grav;
-    }
-}
+            <string>other.djump = 1;
+p_water();
 </string>
           </argument>
         </arguments>

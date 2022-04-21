@@ -36,8 +36,12 @@
       <sprite>sprites\sprPlayerStart</sprite>
     </sprites>
     <sprites name="Player">
-      <sprite>sprites\sprPlayerMask</sprite>
-      <sprite>sprites\sprPlayerMaskFlip</sprite>
+      <sprites name="Masks">
+        <sprite>sprites\sprPlayerMask</sprite>
+        <sprite>sprites\sprPlayerMaskFlip</sprite>
+        <sprite>sprites\sprPlayerMaskSide</sprite>
+        <sprite>sprites\sprPlayerMaskSideFlip</sprite>
+      </sprites>
       <sprite>sprites\sprPlayerIdle</sprite>
       <sprite>sprites\sprPlayerJump</sprite>
       <sprite>sprites\sprPlayerFall</sprite>
@@ -195,6 +199,7 @@
         <script>scripts\p_y.gml</script>
         <script>scripts\p_x_add.gml</script>
         <script>scripts\p_y_add.gml</script>
+        <script>scripts\p_water.gml</script>
       </scripts>
     </scripts>
     <scripts name="Trigger">

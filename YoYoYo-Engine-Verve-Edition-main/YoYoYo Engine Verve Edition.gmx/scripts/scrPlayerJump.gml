@@ -1,18 +1,19 @@
 ///scrPlayerJump()
 
-if (!place_free(x, y + global.grav) || onPlatform || place_meeting(x, y, objWater) || place_meeting(x, y, objPlatform))
+if (!p_place_free(0, sign(global.grav)) || onPlatform || p_place_meeting(0, 0, objWater) || p_place_meeting(0, 0, objPlatform))
 {
-    vspeed = -jumpSpeed;
+    p_vspeed(-jumpSpeed);
+    
     djump = 1;
     audio_play_sound(sndJump, 0, false);
 }
-else if (djump == 1 || place_meeting(x, y + global.grav, objWater2) || global.infJump || global.debugInfJump)
+else if (djump == 1 || p_place_meeting(0, sign(global.grav), objWater2) || global.infJump || global.debugInfJump)
 {
-    vspeed = -djumpSpeed;
+    p_vspeed(-djumpSpeed);
     sprite_index = sprPlayerJump;
     audio_play_sound(sndDJump, 0, false);
     
-    if (!place_meeting(x, y + global.grav, objWater3))
+    if (!p_place_meeting(0, sign(global.grav), objWater3))
         { djump = 0; }
     else
         { djump = 1; }

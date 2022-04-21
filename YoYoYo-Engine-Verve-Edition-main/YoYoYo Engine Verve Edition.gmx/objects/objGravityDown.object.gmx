@@ -25,10 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
+            <string>image_speed = 0;
 
-_grav = 1
-_djump = 1
+_grav = 1;
+_djump = 1;
 </string>
           </argument>
         </arguments>
@@ -51,7 +51,7 @@ _djump = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>p_set_gravity(_grav, _djump)
+            <string>p_set_gravity(_grav, _djump);
 </string>
           </argument>
         </arguments>
@@ -75,10 +75,10 @@ _djump = 1
           <argument>
             <kind>1</kind>
             <string>if image_index == 1 {
-    _djump = false
+    _djump = -1;
 }
-if !_djump {
-    image_index = 1
+if _djump == -1 {
+    image_index = 1;
 }
 </string>
           </argument>

@@ -1,6 +1,5 @@
 ///ScrPlayerReleaseJump()
 
-if (vspeed * global.grav < 0)
-{
-    vspeed *= 0.45;
+if (p_vspeed() * sign(global.grav) < 0) {
+    p_vspeed(p_vspeed() * 0.45);
 }

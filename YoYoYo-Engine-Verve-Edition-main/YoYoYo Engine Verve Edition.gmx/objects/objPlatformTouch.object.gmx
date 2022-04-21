@@ -54,7 +54,7 @@ v = -2;
             <kind>1</kind>
             <string>if (speed == 0 &amp;&amp; instance_exists(objPlayer))
 {
-    if (place_meeting(x, y - objPlayer.vspeed - global.grav, objPlayer))
+    if (place_meeting(x, y - p_vspeed() - sign(global.grav), objPlayer))
     {
         hspeed = h;
         vspeed = v;

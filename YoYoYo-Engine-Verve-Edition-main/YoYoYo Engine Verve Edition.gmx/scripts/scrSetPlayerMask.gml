@@ -1,10 +1,14 @@
 ///scrSetPlayerMask
 //sets the player's mask depending on gravity flip mode
 
-var m = sprPlayerMask;
+if !instance_exists(objPlayer) exit;
+
+var m = sprPlayerMask,
+    p = objPlayer.id;
 
 switch (global.grav) {
     case -2:
+        m = sprPlayerMaskSideFlip;
         break;
     case -1:
         m = sprPlayerMaskFlip;
@@ -13,7 +17,8 @@ switch (global.grav) {
         m = sprPlayerMask;
         break;
     case 2:
+        m = sprPlayerMaskSide;
         break;
 }
 
-mask_index = m;
+p.mask_index = m;

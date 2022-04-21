@@ -6,8 +6,8 @@
 if !instance_exists(objPlayer) exit;
 
 var val = undefined,
-    _y = p.y,
-    p = objPlayer.id;
+    p = objPlayer.id,
+    _y = p.y;
 
 if argument_count > 0 {
     val = argument[0];

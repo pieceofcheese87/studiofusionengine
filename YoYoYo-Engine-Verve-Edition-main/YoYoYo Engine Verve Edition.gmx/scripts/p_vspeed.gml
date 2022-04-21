@@ -17,12 +17,12 @@ if argument_count > 0 {
 
 if (abs(global.grav) == 1) { // If global.grav is -1 or 1, use vspeed as usual
     if val != undefined {
-        p.vspeed = val * sign(global.grav);
+        p.vspeed = val;
     }
     r = p.vspeed;
 } else { // If global.grav is -2 or 2, use hspeed instead of vspeed
     if val != undefined {
-        p.hspeed = val * sign(global.grav);
+        p.hspeed = val;
     }
     r = p.hspeed;
 }

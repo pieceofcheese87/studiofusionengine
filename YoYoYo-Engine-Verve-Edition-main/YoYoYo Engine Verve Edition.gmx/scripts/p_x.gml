@@ -1,13 +1,12 @@
 /// p_x([val])
 // Gets or sets relative x
-// Mostly used for adjustments when flipping gravity and shooting the gun
-// Other uses are likely unnecessary
+// Used for adjustments when flipping gravity; other uses are likely unnecessary
 
 if !instance_exists(objPlayer) exit;
 
 var val = undefined,
-    _x = p.x,
-    p = objPlayer.id;
+    p = objPlayer.id,
+    _x = p.x;
 
 if argument_count > 0 {
     val = argument[0];

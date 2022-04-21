@@ -25,9 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-
-objPlayer.djump = 1;
+            <string>other.djump = 1;
+p_water();
 </string>
           </argument>
         </arguments>

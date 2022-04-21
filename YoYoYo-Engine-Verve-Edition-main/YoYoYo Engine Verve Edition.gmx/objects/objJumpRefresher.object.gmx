@@ -71,7 +71,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_yscale = global.grav;
+            <string>image_yscale = image_xscale * sign(global.grav);
+image_angle = (90 * (abs(global.grav) &gt; 1));
 </string>
           </argument>
         </arguments>

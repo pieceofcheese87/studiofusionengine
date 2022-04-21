@@ -27,9 +27,9 @@
             <kind>1</kind>
             <string>frozen = false; //Sets if the player can move or not
 
-jumpSpeed = 8.5 * global.grav; //Set how fast the player jumps
-djumpSpeed = 7 * global.grav; //Sets how fast the player double jumps
-gravity = 0.4 * global.grav; //Player gravity
+jumpSpeed = 8.5 * sign(global.grav); //Set how fast the player jumps
+djumpSpeed = 7 * sign(global.grav); //Sets how fast the player double jumps
+gravity = 0.4 * sign(global.grav); //Player gravity
 
 djump = 1; //Allow the player to double jump as soon as he spawns
 runSpeed = 3;   //Max horizontal speed
@@ -187,9 +187,9 @@ if ((bbox_right &lt; 0 || bbox_left &gt; room_width || bbox_bottom &lt; 0 || bbo
 }
 
 
-var notOnBlock = (place_free(x, y + global.grav));
-var onVineR = (place_meeting(x + 1, y, objVineR) &amp;&amp; notOnBlock);
-var onVineL = (place_meeting(x - 1, y, objVineL) &amp;&amp; notOnBlock);
+var notOnBlock = (p_place_free(0, sign(global.grav)));
+var onVineR = (p_place_meeting(1, 0, objVineR) &amp;&amp; notOnBlock);
+var onVineL = (p_place_meeting(-1, 0, objVineL) &amp;&amp; notOnBlock);
 
 if (!onVineR &amp;&amp; !onVineL)   //Not touching any vines
 {
@@ -251,6 +251,33 @@ else    //Touching a vine
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Set gravity direction
+
+if abs(global.grav) == 2 {
+    gravity_direction = 0
+} else {
+    gravity_direction = 270
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>///Player actions and movement
 
 //Left-right input
@@ -259,63 +286,74 @@ var R = (scrButtonCheck(KEY.RIGHT) || (global.directionalTapFix &amp;&amp; scrBu
 var h = 0;
 if (!frozen)
     { h = -(L || R) + (2 * R); }
-
-var ice = instance_place(x, y + global.grav, objIceBlock);
-var notOnBlock = place_free(x, y + global.grav);
-var onVineL = (place_meeting(x - 1, y, objVineL) &amp;&amp; notOnBlock);
-var onVineR = (place_meeting(x + 1, y, objVineR) &amp;&amp; notOnBlock);
+if global.grav == 2 h = -h;
+    
+var ice = p_instance_place(0, sign(global.grav), objIceBlock);
+var notOnBlock = p_place_free(0, sign(global.grav));
+var onVineL = (p_place_meeting(-1, 0, objVineL) &amp;&amp; notOnBlock);
+var onVineR = (p_place_meeting(1, 0, objVineR) &amp;&amp; notOnBlock);
 
 //Horizontal movement
 if (h != 0)    //Moving
 {
     xScale = h;
+    if (abs(global.grav) &gt; 1) {
+        xScale = -xScale
+    }
     if ((h == -1 &amp;&amp; !onVineR) || (h == 1 &amp;&amp; !onVineL))
     {
         if (ice == noone)    //Normal movement
-            { hspeed = runSpeed * h; }
+            { p_hspeed(runSpeed * h); }
         else    //Ice movement
         {
-            hspeed += (ice.slip) * h;
+            p_hspeed_add((ice.slip) * h);
             
-            if (abs(hspeed) &gt; runSpeed)
-                hspeed = runSpeed * h;
+            if (abs(p_hspeed()) &gt; runSpeed)
+                p_hspeed(runSpeed * h);
         }
     }
 }
 else    //Not moving
 {
     if (ice == noone)    //Normal movement
-        hspeed = 0;
+        p_hspeed(0);
     else    //Ice movement
     {
-        if (hspeed &gt; 0)
-            { hspeed -= min(ice.slip, abs(hspeed)); }
-        else if (hspeed &lt; 0)
-            { hspeed += min(ice.slip, abs(hspeed)); }
+        if (p_hspeed() &gt; 0)
+            { p_hspeed_add(min(ice.slip, abs(p_hspeed()))); }
+        else if (p_hspeed() &lt; 0)
+            { p_hspeed_add(min(ice.slip, abs(p_hspeed()))); }
     }
 }
 
 onPlatform = false;
 with(objPlatform)
 {
-    if (place_meeting(x, y-global.grav, other))
-    {
-        if ((global.grav == 1 &amp;&amp; other.bbox_bottom &lt;= bbox_top &amp;&amp; other.vspeed &gt;= vspeed) || (global.grav == -1 &amp;&amp; other.bbox_top &gt;= bbox_bottom &amp;&amp; other.vspeed &lt;= vspeed))
+    if abs(global.grav) == 1 {
+        if (place_meeting(x, y-sign(global.grav), other))
         {
-            other.onPlatform = true;
+            if ((global.grav == 1 &amp;&amp; other.bbox_bottom &lt;= bbox_top &amp;&amp; p_vspeed() &gt;= vspeed) || (global.grav == -1 &amp;&amp; other.bbox_top &gt;= bbox_bottom &amp;&amp; p_vspeed() &lt;= vspeed))
+            {
+                other.onPlatform = true;
+            }
+        }
+    } else {
+        if place_meeting(x - sign(global.grav), y, other) {
+            if (global.grav == 2 &amp;&amp; other.bbox_right &lt;= bbox_left &amp;&amp; p_vspeed() &gt;= hspeed) || (global.grav == -2 &amp;&amp; other.bbox_left &gt;= bbox_right &amp;&amp; p_vspeed() &lt;= hspeed) {
+                other.onPlatform = true
+            }
         }
     }
 }
 
-var conveyor = instance_place(x,y + (global.grav), objConveyor);
+var conveyor = p_instance_place(0, sign(global.grav), objConveyor);
 if (conveyor != noone)
 {
-    hspeed += conveyor.h;
+    p_hspeed_add(conveyor.h);
 }
 
-if (global.grav * vspeed &gt; maxVspeed)
-{
-    vspeed = global.grav * maxVspeed;
+if (abs(p_vspeed()) &gt; maxVspeed) {
+    p_vspeed(sign(p_vspeed()) * maxVspeed);
 }
 
 if (!frozen)
@@ -330,10 +368,10 @@ if (!frozen)
         scrKillPlayer();
 }
 
-if (global.adAlign &amp;&amp; !place_free(x, y + (global.grav)) &amp;&amp; !frozen)
+if (global.adAlign &amp;&amp; !p_place_free(0, sign(global.grav)) &amp;&amp; !frozen)
 {
-    if (scrButtonCheckPressed(KEY.ALIGN_LEFT)) {hspeed -= 1;}
-    if (scrButtonCheckPressed(KEY.ALIGN_RIGHT)) {hspeed += 1;}
+    if (scrButtonCheckPressed(KEY.ALIGN_LEFT)) {p_hspeed_add(-1);}
+    if (scrButtonCheckPressed(KEY.ALIGN_RIGHT)) {p_hspeed_add(1);}
 }
 </string>
           </argument>
@@ -364,7 +402,7 @@ if (onVineL || onVineR)
     else
         { xScale = 1; }
     
-    vspeed = 2 * global.grav;
+    p_vspeed(2);
     
     //Try to leave vine
     if (onVineL &amp;&amp; scrButtonCheckPressed(KEY.RIGHT)) || (onVineR &amp;&amp; scrButtonCheckPressed(KEY.LEFT))
@@ -372,18 +410,18 @@ if (onVineL || onVineR)
         if (scrButtonCheck(KEY.JUMP))    //Jumping off
         {
             if (onVineR)
-                { hspeed = -15; }
+                { p_hspeed(-15); }
             else
-                { hspeed = 15; }
-            vspeed = -9 * global.grav;
+                { p_hspeed(15); }
+            p_vspeed(-9);
             audio_play_sound(sndWallJump, 0, false);
         }
-        else    //Falling off
+        else    // You fell off (+ratio)
         {
             if (onVineR)
-                { hspeed = -3; }
+                { p_hspeed(-3); }
             else
-                { hspeed = 3; }
+                { p_hspeed(3); }
         }
     }
 }
@@ -587,50 +625,54 @@ if (instance_exists(objSlope) &amp;&amp; hspeed != 0)
             <kind>1</kind>
             <string>///Block collision (Keep this last)
 
-vspeed += gravity;
+p_vspeed_add(gravity);
 
-if (!place_free(x + hspeed, y + vspeed))
+if (!p_place_free(p_hspeed(), p_vspeed()))
 {
-    if (!place_free(x + hspeed, y) &amp;&amp; hspeed != 0)
+    // wallhugs
+    if (!p_place_free(p_hspeed(), 0) &amp;&amp; p_hspeed() != 0)
     {
-        var maxDist = abs(hspeed);
-        var dir = 180 * (hspeed &lt; 0);
+        var maxDist = abs(p_hspeed());
+        var dir = 180 * (p_hspeed() &lt; 0);
+        if abs(global.grav) &gt; 1  {
+            var dir = 270;
+            if p_hspeed() &lt; 0 dir = 90;
+        }
         move_contact_solid(dir, maxDist);
         
-        hspeed = 0;
-    }
-     
-    if (!place_free(x, y + vspeed) &amp;&amp; vspeed != 0)
-    {
-        var maxDist = abs(vspeed);
-        var dir = 270 - 180 * (vspeed &lt; 0);
-        move_contact_solid(dir, maxDist);
-        
-        if (dir == 180 + global.grav * 90)
-            { djump = 1; }
-        vspeed = 0;
+        p_hspeed(0);
     }
     
-    if (!place_free(x + hspeed, y + vspeed))
+    // gravity
+    if (!p_place_free(0, p_vspeed()) &amp;&amp; p_vspeed() != 0)
     {
-        //hspeed = 0;
-        //Traditional behavior when resolving corner collision is to stop hspeed. When on a platform, this can cause horizontal stutter, so we stop vspeed instead.
-        var p = instance_place(x, y+vspeed, objPlatform);
-        if (!p || place_meeting(x, y, p))
-        {
-            hspeed = 0;
+        var maxDist = abs(p_vspeed());
+        var dir = 270 - 180 * (p_vspeed() &lt; 0);
+        if abs(global.grav) &gt; 1  {
+            var dir = 0;
+            if p_vspeed() &lt; 0 dir = 180;
         }
-        else
-        {
-            vspeed = 0;
+        move_contact_solid(dir, maxDist);
+        
+        if abs(global.grav) &lt;= 1  {
+            if (dir == 180 + sign(global.grav) * 90)
+                { djump = 1; }
+        } else {
+            if (dir == 90 - (sign(global.grav) * 90))
+                { djump = 1; }
         }
+        
+        p_vspeed(0);
     }
+    
+    if (!p_place_free(p_hspeed(), p_vspeed()))
+        { p_hspeed(0); }
 }
 
-xsafe = x + hspeed;
-ysafe = y + vspeed;
+xsafe = x + p_hspeed();
+ysafe = y + p_vspeed();
 
-vspeed -= gravity;
+p_vspeed_add(-gravity);
 </string>
           </argument>
         </arguments>
@@ -656,52 +698,64 @@ vspeed -= gravity;
             <string>///Land on platforms, get snapped
 //Being carried upwards is handled in objPlatform
 
-if (global.grav == 1)    //Normal
-{
-    var landedOnPlatform = bbox_bottom - vspeed - 1 &lt;= other.bbox_top - min(other.vspeed, 0);
-    var jumpedOut = bbox_bottom + vspeed &lt;= other.bbox_top + other.vspeed;
-    
-    if (landedOnPlatform || (jumpedOut &amp;&amp; other.snap))
-    {
-        var yy = other.y - (bbox_bottom - y) - 1;
-        if (!global.platformsPhase)
+switch global.grav {
+    case 1: // Normal gravity
+        var landedOnPlatform = bbox_bottom - vspeed - 1 &lt;= other.bbox_top - min(other.vspeed, 0);
+        var jumpedOut = bbox_bottom + vspeed &lt;= other.bbox_top + other.vspeed;
+        
+        if (landedOnPlatform || (jumpedOut &amp;&amp; other.snap))
         {
+            var yy = other.y - (bbox_bottom - y) - 1;
             move_contact_solid(90, y - yy); //Move against solid to not get snapped into a wall
+            vspeed = max(other.vspeed, 0);
+            
+            onPlatform = true;
+            djump = 1;
         }
-        else
-        {
-            y = yy;
-            ysafe = y;
-        }
-        vspeed = max(other.vspeed, 0);
+        break;
+    case -1: // Upside down gravity
+        var landedOnPlatform = bbox_top - vspeed + 1 &gt;= other.bbox_bottom - max(other.vspeed, 0);
+        var jumpedOut = bbox_top + vspeed &gt;= other.bbox_bottom + other.vspeed;
         
-        onPlatform = true;
-        djump = 1;
-    }
-}
-else    //Flipped
-{
-    var landedOnPlatform = bbox_top - vspeed + 1 &gt;= other.bbox_bottom - max(other.vspeed, 0);
-    var jumpedOut = bbox_top + vspeed &gt;= other.bbox_bottom + other.vspeed;
-    
-    if (landedOnPlatform || (jumpedOut &amp;&amp; other.snap))
-    {
-        var yy = other.y + other.sprite_height + (y - bbox_top);
-        if (!global.platformsPhase)
+        if (landedOnPlatform || (jumpedOut &amp;&amp; other.snap))
         {
+            var yy = other.y + other.sprite_height + (y - bbox_top);
             move_contact_solid(270, yy - y);
+            vspeed = min(other.vspeed, 0);
+            
+            onPlatform = true;
+            djump = 1;
         }
-        else
-        {
-            y = yy;
-            ysafe = y;
-        }
-        vspeed = min(other.vspeed, 0);
+        break;
+    case 2: // Right gravity
+        var landedOnPlatform = bbox_right - hspeed - 1 &lt;= other.bbox_left - min(other.hspeed, 0);
+        var jumpedOut = bbox_right + hspeed &lt;= other.bbox_left + other.hspeed;
         
-        onPlatform = true;
-        djump = 1;
-    }
-} 
+        if (landedOnPlatform || (jumpedOut &amp;&amp; other.snap))
+        {
+            var yy = other.x - (bbox_right - x) - 1;
+            move_contact_solid(180, x - yy); //Move against solid to not get snapped into a wall
+            hspeed = max(other.hspeed, 0);
+            
+            onPlatform = true;
+            djump = 1;
+        }
+        break;
+    case -2: // Left gravity
+        var landedOnPlatform = bbox_left - hspeed + 1 &gt;= other.bbox_right - max(other.hspeed, 0);
+        var jumpedOut = bbox_left + hspeed &gt;= other.bbox_right + other.hspeed;
+        
+        if (landedOnPlatform || (jumpedOut &amp;&amp; other.snap))
+        {
+            var yy = other.x + other.sprite_width + (x - bbox_left);
+            move_contact_solid(0, yy - x);
+            hspeed = min(other.hspeed, 0);
+            
+            onPlatform = true;
+            djump = 1;
+        }
+        break;
+}
 </string>
           </argument>
         </arguments>
@@ -757,11 +811,12 @@ if (global.autosave) //Save the game if currently set to autosave
 
 var drawX = floor(x + 0.5);
 var drawY = floor(y + 0.5);
+var drawAngle = image_angle + (90 * (abs(global.grav) &gt; 1));
 
 if (global.grav == -1)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
     { drawY += 1; }
 
-draw_sprite_ext(sprite_index, image_index, drawX, drawY, image_xscale * xScale, image_yscale * global.grav, image_angle, image_blend, image_alpha);
+draw_sprite_ext(sprite_index, image_index, drawX, drawY, image_xscale * xScale, image_yscale * sign(global.grav), drawAngle, image_blend, image_alpha);
 
 //Draw the player's hitbox
 if (global.debugShowHitbox)

@@ -25,10 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if((objPlayer.vspeed*global.grav) &gt; 2)
-{
-    objPlayer.vspeed = 2*global.grav;
-}
+            <string>p_water();
 </string>
           </argument>
         </arguments>

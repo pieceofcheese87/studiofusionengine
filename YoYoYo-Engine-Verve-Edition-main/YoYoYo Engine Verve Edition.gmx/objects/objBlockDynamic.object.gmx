@@ -174,7 +174,7 @@ with(objBlockDynamic) { solid = false; }
 
 if (inst != noone)
 {
-    if (collision_rectangle(old_left, old_top - global.grav, old_right, old_bottom - global.grav, inst, true, true))
+    if (collision_rectangle(old_left, old_top - sign(global.grav), old_right, old_bottom - sign(global.grav), inst, true, true))
     {
         var carryX = mean(bbox_left, bbox_right) - mean(old_left, old_right);
         var carryY = bbox_top - inst.bbox_bottom - 1;
