@@ -8,7 +8,14 @@ if (savePosition)
 {
     global.saveMap[? "room"] = room_get_name(room);
     global.saveMap[? "playerX"] = objPlayer.x;
-    global.saveMap[? "playerY"] = objPlayer.y;
+    if global.dotkid {
+        //Prevent saving inside the floor with dotkid
+        if instance_position(objPlayer.x,objPlayer.y+9,objBlock) {
+            global.saveMap[? "playerY"] = objPlayer.y - 9;
+        }
+    } else {
+        global.saveMap[? "playerY"] = objPlayer.y;
+    }
     global.saveMap[? "playerXScale"] = objPlayer.xScale;
     global.saveMap[? "grav"] = global.grav;
     

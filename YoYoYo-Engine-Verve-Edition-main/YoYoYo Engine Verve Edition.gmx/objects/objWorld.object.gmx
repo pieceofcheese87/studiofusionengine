@@ -110,6 +110,8 @@ audio_pause_sound(global.currentMusic);
             <kind>1</kind>
             <string>///Game checks - Pause, restart
 
+global.count ++ //Oscillation timer
+
 scrCheckAndSwitchController();
 
 if (global.gameStarted)
@@ -436,6 +438,22 @@ if (!instance_exists(objPlayMusic))
 
 room_speed = 50;
 scrSetRoomCaption();
+
+//Set dotkid and vvv kid to false on room start
+global.dotkid = false
+global.playerV = false
+with objPlayer { scrSetPlayerMask() }
+
+//Set global.count to 0 to reset oscillation cycles
+global.count = 0
+
+//Jungle adventure vines
+global.vineToggle = 0
+
+//Walk the ceiling - remove invert controls if not upside down
+if global.grav == 1 {
+    global.invertControls = false
+}
 </string>
           </argument>
         </arguments>
