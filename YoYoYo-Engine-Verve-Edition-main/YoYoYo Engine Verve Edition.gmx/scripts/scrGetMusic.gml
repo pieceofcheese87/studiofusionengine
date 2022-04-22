@@ -10,11 +10,11 @@ switch (room)                       //Determines which song to play
     case rOptions:
     case rDifficultySelect:
     case rSample:                                                                                                            
-        roomSong = musGuyRock;
+        roomSong = global.stageMusic01;
         break;                      //Make sure to always put a break after setting the song
         
     case rCherryBoss:
-        roomSong = musMegaman;
+        roomSong = global.bossMusic01;
         break;
         
     case rMiku:

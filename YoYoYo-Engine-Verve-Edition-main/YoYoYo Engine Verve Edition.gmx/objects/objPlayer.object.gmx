@@ -44,7 +44,13 @@ scrSetPlayerMask();
 
 if (global.difficulty == 0 &amp;&amp; global.gameStarted)
     { instance_create(x,y,objBow); }
-    
+
+//god mode variables
+bow = false;
+hit = 0;
+hitX = x;
+hitY = y;
+        
 if (global.autosave) //Save the game if currently set to autosave
 {
     scrSaveGame(true);
@@ -169,6 +175,14 @@ if (killer != noone)
 {
     scrKillPlayer();
 }
+
+//Control how long the player is intangible after being hit while god mode is active
+if (hit != 0) 
+{ 
+    image_alpha = 0.7;
+    hit -= 1; 
+}
+else { image_alpha = 1; }
 </string>
           </argument>
         </arguments>
@@ -250,6 +264,30 @@ else if !global.dotkid //Touching a vine
 {
     sprite_index = sprSlide;
     image_speed = 1/2;
+}
+
+if (global.debugNoDeath)
+{
+    if (!instance_exists(objBow))
+    {
+        godBow = instance_create(x, y, objBow);
+        godBow.neg = true;
+    }
+    else 
+    {
+        if (global.difficulty == 0)
+            with (objBow) { neg = true; }
+    }
+}
+else 
+{
+    if (instance_exists(objBow)) 
+    {
+        with (objBow) {  
+            if (global.difficulty == 0) { neg = false; }
+            else { instance_destroy(); }
+        }
+    }
 }
 </string>
           </argument>
@@ -874,23 +912,32 @@ if (global.autosave) //Save the game if currently set to autosave
 
 var drawX = floor(x + 0.5);
 var drawY = floor(y + 0.5);
+var drawColor = c_white;
+
+if global.debugInfJump {
+    drawColor = c_blue; 
+} 
 
 if (global.grav == -1 &amp;&amp; !global.dotkid)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
-    { drawY += 1; }
-
+    drawY += 1; 
+    
 if global.dotkid {
     if global.playerV {
-        draw_sprite_ext(sprDotkidOutlinedV,0,drawX,drawY,image_xscale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+        draw_sprite_ext(sprDotkidOutlinedV, 0, drawX, drawY, image_xscale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
     } else {
-        draw_sprite_ext(sprDotkidOutlined,0,drawX,drawY,image_xscale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+        draw_sprite_ext(sprDotkidOutlined, 0, drawX, drawY, image_xscale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
     }
 } else {
-    draw_sprite_ext(sprite_index,image_index,drawX,drawY,image_xscale*xScale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+    draw_sprite_ext(sprite_index, image_index, drawX, drawY, image_xscale * xScale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
 }
 
 //Draw the player's hitbox
 if (global.debugShowHitbox)
-    { draw_sprite_ext(mask_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha * 0.8); }
+    draw_sprite_ext(mask_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha * 0.8);
+    
+//Draw the player getting hit if god mode is active
+if (hit != 0)
+    draw_sprite_ext(sprPlayerHit, 0, hitX, hitY, 1, 1, 0, c_white, hit/floor(global.debugDeathSpeed/2));
 </string>
           </argument>
         </arguments>
