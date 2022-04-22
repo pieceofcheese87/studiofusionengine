@@ -8,9 +8,9 @@ Todo:
 
 - ~~Add cross blocks / donut blocks from BetterBlock~~
 
-- Add Redbatnick music loading
+- ~~Add Redbatnick music loading~~
 
-- Add Redbatnick debug options
+- ~~Add Redbatnick debug options~~
 
 - ~~Condense vine script~~
 
