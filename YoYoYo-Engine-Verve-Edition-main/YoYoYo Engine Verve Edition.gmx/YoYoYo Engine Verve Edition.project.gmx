@@ -112,6 +112,10 @@
       <sound>sound\sndYoshi2</sound>
       <sound>sound\sndYoshiJump</sound>
       <sound>sound\sndCeilingSwitch</sound>
+      <sound>sound\sndKey</sound>
+      <sound>sound\sndDoor</sound>
+      <sound>sound\sndMaster</sound>
+      <sound>sound\sndUnmaster</sound>
     </sounds>
   </sounds>
   <sprites name="sprites">
@@ -144,8 +148,15 @@
         <sprite>sprites\sprPlayerVFall</sprite>
         <sprite>sprites\sprPlayerVIdle</sprite>
         <sprite>sprites\sprPlayerVRun</sprite>
+        <sprite>sprites\sprPlayerVJump</sprite>
+        <sprite>sprites\sprPlayerVSlide</sprite>
+        <sprite>sprites\sprPlayerVClimb</sprite>
         <sprite>sprites\sprVCoinA</sprite>
         <sprite>sprites\sprVCoinB</sprite>
+      </sprites>
+      <sprites name="Telekid">
+        <sprite>sprites\sprTelekidEnable</sprite>
+        <sprite>sprites\sprTelekidDisable</sprite>
       </sprites>
       <sprite>sprites\sprPlayerMask</sprite>
       <sprite>sprites\sprPlayerMaskFlip</sprite>
@@ -154,6 +165,7 @@
       <sprite>sprites\sprPlayerFall</sprite>
       <sprite>sprites\sprPlayerRun</sprite>
       <sprite>sprites\sprPlayerSlide</sprite>
+      <sprite>sprites\sprPlayerClimb</sprite>
       <sprite>sprites\sprBow</sprite>
       <sprite>sprites\sprBullet</sprite>
       <sprite>sprites\sprBlood</sprite>
@@ -180,6 +192,10 @@
         <sprite>sprites\sprBreakableBlock</sprite>
         <sprite>sprites\sprToggleBlockEmpty</sprite>
         <sprite>sprites\sprToggleBlockFull</sprite>
+        <sprite>sprites\sprJumpBlockFull</sprite>
+        <sprite>sprites\sprJumpBlockEmpty</sprite>
+        <sprite>sprites\sprSJumpBlockFull</sprite>
+        <sprite>sprites\sprSJumpBlockEmpty</sprite>
       </sprites>
       <sprite>sprites\sprBlockMask</sprite>
       <sprite>sprites\sprBlockMaskCentered</sprite>
@@ -271,6 +287,7 @@
       <sprite>sprites\sprSaw</sprite>
       <sprite>sprites\sprThwomp</sprite>
       <sprite>sprites\sprShuriken</sprite>
+      <sprite>sprites\sprLeek</sprite>
     </sprites>
     <sprites name="Misc">
       <sprites name="Vines">
@@ -297,6 +314,8 @@
       <sprites name="Gravity/Physics">
         <sprite>sprites\sprGravityUp</sprite>
         <sprite>sprites\sprGravityDown</sprite>
+        <sprite>sprites\sprGravityCoinUp</sprite>
+        <sprite>sprites\sprGravityCoinDown</sprite>
         <sprite>sprites\sprRotateKidDown</sprite>
         <sprite>sprites\sprRotateKidUp</sprite>
         <sprite>sprites\sprFlipBlockDown</sprite>
@@ -310,6 +329,8 @@
         <sprite>sprites\sprHighSpeedField</sprite>
         <sprite>sprites\sprLowGravityField</sprite>
         <sprite>sprites\sprLowSpeedField</sprite>
+        <sprite>sprites\sprAntiGravityField</sprite>
+        <sprite>sprites\sprZeroGravityField</sprite>
       </sprites>
       <sprites name="Gimmicks">
         <sprite>sprites\sprShootRefresherL</sprite>
@@ -322,11 +343,29 @@
         <sprite>sprites\sprMagnetField</sprite>
         <sprite>sprites\sprWindField</sprite>
       </sprites>
+      <sprites name="Keypick">
+        <sprite>sprites\sprKey</sprite>
+        <sprite>sprites\sprDoorBreak</sprite>
+        <sprite>sprites\sprDoor1</sprite>
+        <sprite>sprites\sprDoor2</sprite>
+        <sprite>sprites\sprDoor3</sprite>
+        <sprite>sprites\sprDoor4</sprite>
+        <sprite>sprites\sprDoor6</sprite>
+        <sprite>sprites\sprDoor8</sprite>
+        <sprite>sprites\sprMasterKey</sprite>
+        <sprite>sprites\sprMasterGlow</sprite>
+        <sprite>sprites\sprMasterDoor1</sprite>
+        <sprite>sprites\sprMasterDoor2</sprite>
+        <sprite>sprites\sprMasterDoor3</sprite>
+        <sprite>sprites\sprMasterDoor4</sprite>
+      </sprites>
       <sprite>sprites\sprWater</sprite>
       <sprite>sprites\sprWaterUnrefreshing</sprite>
       <sprite>sprites\sprJumpRefresher</sprite>
       <sprite>sprites\sprBlockRefresher</sprite>
       <sprite>sprites\sprSign</sprite>
+      <sprite>sprites\sprLadder</sprite>
+      <sprite>sprites\sprCouch</sprite>
       <sprite>sprites\sprEmpty</sprite>
       <sprites name="HP Bar">
         <sprite>sprites\sprHPbar</sprite>
@@ -363,6 +402,7 @@
   </sprites>
   <backgrounds name="background">
     <background>background\bAllTiles</background>
+    <background>background\bColorTiles</background>
     <background>background\bMegaman</background>
     <background>background\bJumpThrough</background>
     <background>background\bTree</background>
@@ -720,6 +760,22 @@
         <object>objects\objHPbg</object>
         <object>objects\objHPside</object>
       </objects>
+      <objects name="Keypick">
+        <object>objects\objKeypickControl</object>
+        <object>objects\objKey</object>
+        <object>objects\objMasterKey</object>
+        <object>objects\objDoorBreak</object>
+        <object>objects\objDoor1</object>
+        <object>objects\objDoor2</object>
+        <object>objects\objDoor3</object>
+        <object>objects\objDoor4</object>
+        <object>objects\objDoor6</object>
+        <object>objects\objDoor8</object>
+        <object>objects\objMasterDoor1</object>
+        <object>objects\objMasterDoor2</object>
+        <object>objects\objMasterDoor3</object>
+        <object>objects\objMasterDoor4</object>
+      </objects>
       <object>objects\objWater</object>
       <object>objects\objWater2</object>
       <object>objects\objWater3</object>
@@ -789,6 +845,7 @@
         <room>rooms\rTest14</room>
         <room>rooms\rTest15</room>
         <room>rooms\rTest16</room>
+        <room>rooms\rTest17</room>
       </rooms>
     </rooms>
     <room>rooms\rTemplate</room>

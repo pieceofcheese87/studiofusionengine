@@ -15,6 +15,7 @@ switch(argument0)
         sprFall  = sprPlayerFall;
         sprJump  = sprPlayerJump;
         sprSlide = sprPlayerSlide;
+        sprClimb = sprPlayerClimb;
         break;
     
     case SKIN.DOTKID:
@@ -24,6 +25,7 @@ switch(argument0)
             sprFall  = sprDotkidOutlinedV;
             sprJump  = sprDotkidOutlinedV;
             sprSlide = sprDotkidOutlinedV;
+            sprClimb = sprDotkidOutlinedV;
         }
         else {
             sprIdle  = sprDotkidOutlined;
@@ -31,6 +33,7 @@ switch(argument0)
             sprFall  = sprDotkidOutlined;
             sprJump  = sprDotkidOutlined;
             sprSlide = sprDotkidOutlined;
+            sprClimb = sprDotkidOutlined;
         }
         break;
         
@@ -38,8 +41,9 @@ switch(argument0)
         sprIdle  = sprPlayerVIdle;
         sprRun   = sprPlayerVRun;
         sprFall  = sprPlayerVFall;
-        sprJump  = sprPlayerVFall; //V kid doesn't jump or slide on vines
-        sprSlide = sprPlayerVFall;
+        sprJump  = sprPlayerVJump; 
+        sprSlide = sprPlayerVSlide;
+        sprClimb = sprPlayerVClimb;
         break;
     
     case SKIN.YOSHI:
@@ -48,5 +52,6 @@ switch(argument0)
         sprFall  = sprYoshiFall;
         sprJump  = sprYoshiJump;
         sprSlide = sprYoshiFall; //yoshi doesn't slide on vines
+        sprClimb = sprYoshiFall; //yoshi doesn't climb (aint got no arms)
         break;
 }

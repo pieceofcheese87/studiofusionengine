@@ -40,6 +40,7 @@ global.autosave = false;        //Used to autosave the next time the player is c
 global.noDeath = false;
 global.infJump = false;
 global.dotkid = false;
+global.telekid = false;
 global.playerV = false;
 global.invertControls = false;
 
@@ -87,5 +88,20 @@ scrOptionsList();
 global.makingTrigger = false;
 global.triggers = ds_list_create();
 scrTriggerList();
+
+//keypick stuff
+enum K {
+    MASTER = 0,
+    WHITE = 1,
+    PURPLE = 2,
+    ORANGE = 3,
+    BLACK = 4,
+    TEAL = 5,
+    GREEN = 6,
+    RED = 7,
+    BROWN = 8,
+    PINK = 9,
+    BLUE = 10,
+}
 
 randomize();    //Make sure the game starts with a random seed for RNG

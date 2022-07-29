@@ -13,6 +13,15 @@ if instance_exists(objYoshiControl)
     objPlayer.jumpSpeed = 8.5*global.grav
     objPlayer.djump = 1
 }
+else if instance_exists(objKeypickControl) && objKeypickControl.keyCount[K.MASTER] > 0 {
+    if objKeypickControl.usingMaster {
+        objKeypickControl.usingMaster = false
+        audio_play_sound(sndUnmaster,0,0)
+    } else {
+        objKeypickControl.usingMaster = true
+        audio_play_sound(sndMaster,0,0)
+    }
+}
 else if (instance_number(objBullet) < 4)
 {
     if global.dotkid {

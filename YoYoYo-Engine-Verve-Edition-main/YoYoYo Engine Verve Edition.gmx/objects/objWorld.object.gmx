@@ -439,8 +439,9 @@ if (!instance_exists(objPlayMusic))
 room_speed = 50;
 scrSetRoomCaption();
 
-//Set dotkid and vvv kid to false on room start
+//Set dotkid, telekid and vvv kid to false on room start
 global.dotkid = false
+global.telekid = false
 global.playerV = false
 with objPlayer { scrSetPlayerMask() }
 

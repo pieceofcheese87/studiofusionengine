@@ -215,7 +215,7 @@ var skin = SKIN.DEFAULT;
 if global.dotkid {
     skin = SKIN.DOTKID;
 }
-else if global.playerV {
+else if global.playerV || global.telekid {
     skin = SKIN.VVV;
 }
 else if instance_exists(objYoshiControl) {
@@ -914,19 +914,29 @@ var drawX = floor(x + 0.5);
 var drawY = floor(y + 0.5);
 var drawColor = c_white;
 
-if global.debugInfJump {
+if global.playerV {
+    drawColor = make_color_rgb(1,164,217) // blue color from original V kid sprite
+} else if global.debugInfJump {
     drawColor = c_blue; 
 } 
 
 if (global.grav == -1 &amp;&amp; !global.dotkid)      //Need to draw the player a pixel off in the y-axis when flipped for some reason
     drawY += 1; 
     
+// draw keypick master glow 
+if instance_exists(objKeypickControl) &amp;&amp; objKeypickControl.usingMaster {
+    draw_set_blend_mode(bm_add)
+    draw_sprite(sprMasterGlow,0,drawX,drawY)
+    draw_set_blend_mode(bm_normal)
+    draw_set_alpha(0.6)
+    draw_sprite(sprMasterKey,0,drawX-16,drawY-16)
+    draw_set_alpha(1)
+}
+ 
+// draw dotkid   
 if global.dotkid {
-    if global.playerV {
-        draw_sprite_ext(sprDotkidOutlinedV, 0, drawX, drawY, image_xscale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
-    } else {
-        draw_sprite_ext(sprDotkidOutlined, 0, drawX, drawY, image_xscale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
-    }
+    var spr = scrTernary(global.playerV, sprDotkidOutlinedV, sprDotkidOutlined);
+    draw_sprite_ext(spr, 0, drawX, drawY, image_xscale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
 } else {
     draw_sprite_ext(sprite_index, image_index, drawX, drawY, image_xscale * xScale, image_yscale * global.grav, image_angle, drawColor, image_alpha);
 }
