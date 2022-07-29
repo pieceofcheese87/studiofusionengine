@@ -866,6 +866,8 @@
         <room>rooms\rTest18</room>
         <room>rooms\rTest19</room>
         <room>rooms\rTest20</room>
+        <room>rooms\rTest21</room>
+        <room>rooms\room34</room>
       </rooms>
     </rooms>
     <room>rooms\rTemplate</room>
