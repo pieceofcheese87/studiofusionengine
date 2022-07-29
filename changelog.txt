@@ -1,0 +1,48 @@
+UPDATE - Jul. 29 / 2022
+- Import NANE into Verve engine
+- Add Redbatnick engine debug mode and external music loading
+- Add GMSched extension (prevents slowdown on Win10)
+- Remove Betterblock (obsolete)
+	- Keep some betterblock objects
+	- Fix timing on donut blocks
+- Add objects from Renex engine:
+	- Gravity coins
+	- Leeks
+	- Telekid
+	- Jump-toggle blocks (Kill the guy)
+- Add objects from Redbatnick engine:
+	- Anti-gravity field
+	- Zero-gravity field
+	- Ladders
+- Add new background assets:
+	- bAllTiles
+	- bColorTiles
+	- bMegaman
+	- bJumpThrough
+	- bTree
+	- bStars
+- Add Keypick gimmick
+- Remove secret item object (again)
+- Reorder folder structure (no longer source-based)
+- Condense vine script
+- Other minor changes (mostly to integrate properly with Verve engine)
+
+UPDATE - Aug. 13 / 2020
+- Readd the secret item object
+- Import BetterBlock Engine blocks and objects
+
+UPDATE - Nov. 22 / 2019
+- Removed "Not Another Secret Item" from the engine 
+- Fixed sound scrambling bug
+- Made saves shootable by default
+- Fixed apple rings crashing the game if offscreen
+- Added Crimson Needle 3 gimmicks:
+	- Sideways Platforms
+	- Shoot Refreshers
+	- Colored Warps
+	- Booster Blocks
+	- Block Refreshers
+	- Flip Blocks
+	- Elevator Blocks
+- Added test room for CN3 assets
+- Minor change to object order in the library

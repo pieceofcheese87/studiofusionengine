@@ -1,0 +1,526 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+This document will explain what the newly added objects in the engine are and how they behave, as well as show how to customize them with examples.
+All customizable variables are to be set in an object's room creation code, NOT the object's create event code.
+
+If you are new to game maker, please watch Denferok's tutorial videos for the engine: 
+https://www.youtube.com/watch?v=IvN9ni1sZhg
+https://www.youtube.com/watch?v=oPJvLmgBTbY
+
+Klazen's game maker tutorial is also very helpful for explaining the basics:
+http://klazen.com/IWBTG/tutorial/dev_tutorial.html
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+=================
+Rotating Shuriken
+=================
+
+This object will simply rotate clockwise or counterclockwise at whatever speed you tell it to. 
+Rotation speed is in degrees per frame, so for each frame (gamemaker calls it a step) it will rotate at that many degrees. 
+A positive rotation speed will rotate it counterclockwise, while a negative value will rotate it clockwise. 
+
+Customizable variables:
+image_angle_speed - the speed at which the shuriken rotates - default: 2
+
+===========
+Jump Spikes
+===========
+
+These spikes will shift back or forth every time the player jumps. There are two variations of each spike as they can start in one of two positions.
+The "Out" spikes start in their out position, which means their first move will be back into the block in the direction of the flat side of the spike.
+The "In" spikes start in the in position, so their first move will be coming out in the direction of the pointed side of the spike.
+
+Customizable variables:
+dist - how far, in pixels, the spike will move in one shift - default: 32
+moveSpeed - how fast the spike moves while it is shifting - default: 6
+xScalar - 1 to move right first, -1 to move left first, 0 to not move horizontally
+yScalar - 1 to move down first, -1 to move up first, 0 to not move veritcally
+
+-----------------------------------------------------------------------------------------
+Example - placing objJumpSpike_UpOut:
+-----------------------------------------------------------------------------------------
+//Upwards facing spike that will move right to left over two blocks when the player jumps
+
+dist = 64   //making it move two blocks instead of one
+xScalar = 1 //it will shift to the right when you jump
+yScalar = 0 //it will not move vertically when you jump
+-----------------------------------------------------------------------------------------
+
+=============
+Toggle Spikes
+=============
+
+Spikes that can be transparent and harmless or act as a regular spike. When the player shoots, they will swap and all transparent toggle 
+spikes will become solid while all solid toggle spikes will become transparent. Regular spikes placed in the room are unaffected by these.
+
+=============
+Cherry Circle
+=============
+
+Spawns a rotating circle of cherries with the center point at the object's position. 
+Operates at 4 motion settings: Normal circle, loop back to center, complex circle and swaying circle.
+
+Customizable variables:
+numCherries - Number of cherries in the circle - default: 3
+dt - time increment per frame, where 1t = 1 cycle - default: 1/200
+motion - motion setting for the circle, can be 1, 2, 3 or 4 - default: 1
+radius - maximum distance of the cherries from the center - default: 80
+
+-----------------------------------------------------------------------------------------
+Example 
+-----------------------------------------------------------------------------------------
+//Spawns a large swaying circle with six cherries
+
+numCherries = 6
+dt = 1/500 //500 frames for one cycle, or 10 seconds
+motion = 4 //swaying circle
+radius = 96 //3 blocks from center
+-----------------------------------------------------------------------------------------
+
+======
+Thwomp
+======
+
+This object is pretty simple, it will fall if you walk underneath and then slowly rise back to its starting position.
+If you are on yoshi, you can bounce on the top of them. There aren't any customizable variables.
+
+==========
+Wind Field
+==========
+
+Acts the same way as a conveyor, but for a region of space instead of on a surface. Adjusts the player's speed in the direction
+of the field. 
+
+Customizable variables:
+hsp - how much to change the player's speed by, can be negative to push left and positive to push right - default: -2
+
+==================
+Unrefreshing Water
+==================
+
+Acts similar to water but does not replenish the player's jump. 
+
+===============
+Breakable Block
+===============
+
+A block that can be destroyed by shooting it from the side.
+
+==========
+Push Block
+==========
+
+A block that can be pushed by the player from either side and is affected by gravity.
+
+Customizable variables:
+pushSpeed - how fast it moves while being pushed by the player, recommended not to be higher than 3 - default: 2
+grav - gravitational acceleration on the block, can be negative for the block to behave upside-down - default: 0.2
+maxFallSpeed - the fastest the block will go while it is falling - default: 9
+
+============
+Toggle Block
+============
+
+Similar to the toggle spikes, can be solid or empty and will change between the two states when the player shoots. If the player
+is inside a block when it changes solid, he will die.
+
+==========
+Jump Block
+==========
+
+Changes between solid and empty as the player jumps. Kills the player if turning solid and the player is inside.
+
+==============================
+Single Jump Block (SJumpBlock)
+==============================
+
+Same as above, but only changes if the player performs a single jump.
+
+================
+Balance Platform
+================
+
+This object works in pairs. When the player steps on one platform, that platform will fall while the other will rise. If one platform
+cannot move due to a block, the other will also be prevented from moving. If there is only one placed in a room, it will just behave as a 
+normal platform. In order to have more than one pair of these in one room, you must use the pid variable.
+
+Customizable variables:
+pid - the id for the platform. can be any number as long as there is another platform in the room sharing the same id - default: 0
+
+==========
+NANG Stars
+==========
+
+Will set the player's jump mode to single, double or triple jump. Effect lasts until the player touches a different star or when the room ends.
+
+===========
+NANG Fields
+===========
+
+Fields that perform different effects on the player when touching.
+The effects are: Red - Low gravity, Blue - High Gravity, Green - High Speed, Yellow - Low Speed
+The actual code for these objects can be found in the player object.
+
+=================
+Redbatnick Fields
+=================
+
+Anti Gravity Field: Reverses the player's gravity while inside (similar effect to Magnet field)
+Zero Gravity Field: Sets the player's gravity to 0 while inside. 
+
+======
+Lasers
+======
+
+Will kill the player if on and are harmless if off. Can be toggled with a laser switch.
+
+============
+Laser Switch
+============
+
+Toggles on lasers off and off lasers on. Can be activated by the player's bullet or by touching.
+
+=============
+Bullet Cannon
+=============
+
+Shoots a bullet bill in the direction it is pointing on a given timer. Can also be set to constantly target the player.
+
+Customizable variables:
+followPlayer - whether or not the cannon will target its shots at the player - default: false
+delay - how many frames are in between the cannon shots - default: 60
+dir - direction the cannon fires its shots in, 0 = right, 90 = up, 180 = left, 270 = down - default: 0 
+bulletSpeed - how fast the bullets travel after being shot - default: 5
+
+====================
+Bullet Cannon Holder
+====================
+
+Decoration object to be placed on top of a bullet cannon. Will automatically extend itself to the floor.
+
+=========================
+See the Moon Effect Beams
+=========================
+
+Set effects on the player on contact. Effects will stack if they can. Green beam sets the player back to normal.
+Effects: Purple - single jump, Yellow - high speed, Blue - high gravity, Red - low gravity, Green - reset
+
+===========
+Screen Wrap
+===========
+
+Wraps the player to the other side of the room if he goes off screen. objScreenWrapFull applies the effect to the entire room and
+objScreenWrap is an object that will only wrap the player on contact.
+
+==============
+Dotkid Swapper
+==============
+
+When collected by the player, will switch the player to dotkid or back to a normal player if already dotkid. Will disappear when collected.
+NOTE: Dotkid does not work well with some gimmicks. Make sure to test your levels!
+
+============
+Magnet Field
+============
+
+Object that will accelerate the player upward when he is inside it. Can be stretched vertically via image_yscale or just in the room editor.
+
+=======
+V Coins
+=======
+
+These will change the player between normal kid and vvvvvv kid. The vvvvvv kid will flip gravity when the jump key is pressed and always
+falls at max speed. The blue coin will change the normal kid to a vvvvvv kid, and the red coin will change the vvvvvv kid back to a normal kid. 
+Coins are destroyed when used. 
+NOTE: Works with dotkid
+
+======
+Camera
+======
+
+When shot, creates a shadow on the player's position that rises up some distance and stops, and behaves as a solid platform. 
+The camera is not solid and will be destroyed after being shot. 
+
+======================
+Jungle Adventure Vines
+======================
+
+Special walljump vines that have different effects depending on the color vine used. 
+Red - Moves the player up instead of down
+Ice Vine - Does not change the player's vertical speed at all and allows vertical acceleration. (slippery vines)
+Blue - When jumping off, the player's gravity is flipped.
+Yellow - The player will remain in place while touching the vine. (sticky vines)
+Purple - After jumping off, the player receives a low gravity effect that only goes away after landing on a block.
+White/Black - When jumping off a white vine, all white vines will deactivate and the black ones will activate, and vice versa. 
+Fire Vine - After jumping off, the player receives a speed boost that will go away after landing on a block.
+
+==========
+Kid Blocks
+==========
+
+Allows passage through if the player has the correct gravity, otherwise will kill the player.
+
+=======
+CLasers
+=======
+
+Work the same as the other lasers but look different.
+
+=============
+CLaser Switch
+=============
+
+Works the same as the other laser switch.
+
+==========
+Rotate Kid
+==========
+
+These objects will rotate the screen so the kid is facing in the same direction as the image on the object.
+
+=======================
+Green and Orange spikes
+=======================
+
+While the green spikes are active, the orange spikes aren't, and vice versa. They can be swapped with a Spike Switch object.
+
+============
+Spike Switch
+============
+
+For the Green and Orange spikes. Switches which color kills and which one doesn't. Is destroyed when touched.
+
+==================
+Pastel Black Spike
+==================
+
+When shot from the side, will move in that direction until or unless there is a block in its way.
+
+=================
+Pastel Blue Spike
+=================
+
+When shot, will create a moving water block that moves in the direction the spike is facing. The water creates is water2, 
+which is the water that allows jumping inside but does not allow another jump after leaving the water. 
+
+Customizable variables:
+destroy - set to true for the spike to be destroyed when shot - default: false
+waterSpeed - the speed that the created water travels - default: 2
+
+==================
+Pastel Green Spike
+==================
+
+When shot, creates a moving green square that moves in the direction the spike is facing. The green square will deactivate any block
+it touches. Deactivated blocks will reactivate after no longer touching the green square. If a block reactivates while the player is inside,
+the player will become stuck and will be forced to restart.
+
+Customizable variables:
+destroy - set to true for the spike to be destroyed when shot - default: false
+waterSpeed - the speed that the created green square travels - default: 2
+
+========
+Munchers
+========
+
+Acts as a block if the player is on yoshi and kills the player if not.
+
+===
+Saw
+===
+
+Allows bouncing on the top if the player is on yoshi, otherwise it kills the player.
+
+=====
+Yoshi
+=====
+
+Jumping on yoshi gives the player special movement. You can no longer double jump, but your single jump is much higher and you can stand
+on munchers and bounce on saws and thwomps. You can "dismount" yoshi by shooting his head off, which grants the player his double jump
+back even if in mid-air.
+NOTE: Doesn't work with some gimmicks. Test your levels!
+
+=======
+Telekid
+=======
+
+Activated with objTelekidEnable, deactivated with objTelekidDisable. Powerup that replaces the gun with a "ghost" that travels in the direction you're facing.
+If the ghost touches a wall, it teleports the player to that position and is destroyed. If the ghost touches a cherry, the player dies.
+
+==========
+Chomp Trap
+==========
+
+When the player stands on this, it will create a fast moving set of jaws that will kill the player if he does not jump off quickly enough.
+
+=======================
+Sheep Blocks and Spikes
+=======================
+
+Upon touching one of the colored blocks, every block and spike of that color on the screen will start to flash and will disappear. You can have the same 
+color appear twice in one room as long as they are separated by a screen. 
+
+=================
+Sideways Platform
+=================
+
+Behaves identical to a normal moving platform, but it's sideways. You know, because why not.
+
+============
+Colored Warp
+============
+
+Teleports the player between two locations in one room. You can have five pairs of these in each room.
+
+Customizable variables:
+num - id of the warp (0 = red, 1 = orange, 2 = yellow, 3 = green, 4 = blue)
+
+================
+Shoot Refreshers
+================
+
+Refresh the player's double jump once if shot. Are to be attached to walls.
+Comes in two varieties: normal and toggle. Toggle refreshers alternate between active and not active and allow for chain refreshing.
+
+Customizable variables:
+active (toggle refresher only) - Set to true for green (shootable) and false for orange (not shootable)
+
+=============
+Booster Block
+=============
+
+Makes the player bounce upwards if touched. Works in both gravity directions.
+
+===============
+Block Refresher
+===============
+
+Works as a normal jump refresher but with a square hitbox, and is semi-transparent. 
+By default, this does not reappear.
+
+Customizable variables:
+refreshTime - How long it takes to reappear after being touched (-1 by default, meaning no reappear)
+
+==========
+Flip Block
+==========
+
+Works the same as gravity flippers, but with a square hitbox. Does not refresh double jump on flipping by default.
+
+Customizable variables:
+djump - Whether or not the player's double jump is refreshed when flipping. False by default.
+
+==============
+Elevator Block
+==============
+
+Moves the player upwards or downwards (relative to player gravity) at a fixed speed.
+
+
+==================
+BetterBlock Assets
+==================
+
+Scaling block: Smoothly scales up and down in size; acts as a block
+
+Donut block: Falls down if the player stands on it for long enough
+	Customizable variables: 
+	lifetime - how long the player stands on the block before it falls (40 by default)
+
+Expand block: Set of blocks that expands in and out in a line (use objExpandBlockSource)
+	Customizable variables:
+	horizontal - whether the line expands horizontally (true by default, goes vertical if false)
+	moveTime - how long it takes to expand, in frames (64 by default)
+	blocks - how many blocks in the chain (5 by default)
+
+====
+Leek
+====
+
+Stationary killer object.
+
+=====
+Couch
+=====
+
+Object that will spring the player upwards upon touching it if the variable "trap" is set to true (false by default).
+
+======
+Ladder
+======
+
+Allows the player to climb, using the left,right,up and down arrow keys. Works with most gimmicks, but could have some bugs.
+
+=============
+Gravity Coins
+=============
+
+Swap the player's gravity, and then get destroyed.
+
+=======
+Keypick
+=======
+
+Place the object objKeypickControl in a room to use this gimmick.
+Allows collecting keys and opening doors with said keys. Assets are taken from I Wanna Keypick.
+Most gimmicks from Keypick are not present, but I did port over the Master Key. Press the shoot button to toggle using a master key.
+
+objKey: A key in the room that can be collected if the player touches it
+	Customizable variables:
+	k - Numeric ID of the key type (K.WHITE by default). Uses the "K" enum as defined in scrInitializeGlobals. 
+	n - How many keys to collect when touching (1 by default). Draws a number on the key if n is not 1.
+
+objDoor[n]: A door in the room that can be opened if the player has enough keys that match its color. Comes in several varieties for different numbers of keys. Can be opened with one master key.
+	Customizable variables:
+	k - Numeric ID of the key type accepted by the door (K.WHITE by default).
+
+objMasterKey: A special key that adds a master key to the player's key collection
+	Customizable variables:
+	n - How many keys to collect when touching (1 by default). Draws a number on the key if n is not 1.
+
+objMasterDoor[n]: A door in the room that can be opened if the player has enough master keys. Comes in several varieties for different numbers of keys.
+
+For an example of how to use this gimmick, see rTest17.
+
+======
+HP Bar
+======
+
+A clean HP Bar object to use for boss fights. Instructions are in the object for how to use. 
+
+==========
+Oscillator
+==========
+
+This object has no use other than to show how to use the oscillate script.
+
+------------------------------------------------------------------------------------------------------------------------
+
+Misc. Objects
+
+objJumpSpikesBehindTiles - If placed in a room will make all Jump Spikes go behind the tiles in the room.
+objRoomStartDotkid - If placed in a room, will have the player always spawn as dotkid if starting in the room.
+objRoomStartVPlayer- If placed in a room, will have the player always spawn as VVVVVV kid if starting in the room.
+objRoomStartTelekid- If placed in a room, will have the player always spawn as telekid if starting in the room.
+
+What NOT to place in rooms (if you do I will be ever so cross)
+objJumpSpike      (Parent)
+objToggleSpike    (Parent)
+objLaser          (Parent)
+objShootRefresher (Parent)
+objCameraStatue
+objFirePart
+objSpinTransitionPlayer
+objPastelGreenWater
+objPlaceholderBlock
+objYoshiControl
+objYoshiDead
+objYoshiLost
+objChompy
+objHPbar    (Should be spawned by a boss object instead)
+objHPbar2
+objHPbg
+objHPside   
+objDoorBreak
+objTelekid
